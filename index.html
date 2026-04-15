@@ -14,20 +14,20 @@
     <meta name="application-name" content="Research Slot" />
     <meta name="author" content="Feed Scription" />
 
-    <!-- 不进 Google -->
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="googlebot" content="noindex, nofollow" />
+    <!-- 欢迎 Google —— 站点 canonical 在下方，改一处即可切域名 -->
+    <link rel="canonical" href="https://feed-scription.github.io/research-slot/" />
 
     <!-- 图标 + manifest -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Open Graph (社交分享卡 — 不依赖搜索引擎) -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Research Slot" />
     <meta property="og:title" content="科研老虎机 · Research Slot" />
     <meta property="og:description" content="拉一下铜球手柄，让三位匿名审稿人决定你论文的归宿。" />
+    <meta property="og:url" content="https://feed-scription.github.io/research-slot/" />
     <meta property="og:locale" content="zh_CN" />
     <meta property="og:locale:alternate" content="en_US" />
 
@@ -35,6 +35,23 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="科研老虎机 · Research Slot" />
     <meta name="twitter:description" content="拉一下铜球手柄，让三位匿名审稿人决定你论文的归宿。" />
+
+    <!-- JSON-LD 结构化数据 -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "科研老虎机 · Research Slot",
+        "alternateName": "Research Slot",
+        "description": "一台 1970 年代学术报刊样式的同行评审彩票装置。拉一下铜球手柄，让三位匿名审稿人决定你论文的归宿。",
+        "url": "https://feed-scription.github.io/research-slot/",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any (web)",
+        "inLanguage": ["zh-CN", "en"],
+        "author": { "@type": "Organization", "name": "Feed Scription" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

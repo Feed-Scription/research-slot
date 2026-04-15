@@ -1,2 +1,4 @@
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://feed-scription.github.io/research-slot/sitemap.xml
