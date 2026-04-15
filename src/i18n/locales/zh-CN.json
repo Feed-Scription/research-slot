@@ -166,7 +166,7 @@
   "meta": {
     "best": {
       "label": "Best Paper",
-      "tagline": "全场起立，请发表获奖感言"
+      "tagline": "三位评审都打在最高档"
     },
     "accept": {
       "label": "Accept",
@@ -174,7 +174,7 @@
     },
     "reject": {
       "label": "Reject",
-      "tagline": "Reviewer 2 的生日蛋糕"
+      "tagline": "下一轮再投"
     },
     "flavor": {
       "asshole": "AC 亲自压了一档",
@@ -186,7 +186,7 @@
   "ratings": {
     "best": {
       "label": "Best Paper",
-      "tagline": "全场起立，请发表获奖感言"
+      "tagline": "三位评审都打在最高档"
     },
     "strong_accept": {
       "label": "Strong Accept",
@@ -194,7 +194,7 @@
     },
     "weak_accept": {
       "label": "Weak Accept",
-      "tagline": "能发就行，别挑"
+      "tagline": "刚过门槛"
     },
     "borderline": {
       "label": "Borderline",
@@ -206,7 +206,7 @@
     },
     "strong_reject": {
       "label": "Strong Reject",
-      "tagline": "Reviewer 2 的生日蛋糕"
+      "tagline": "下一轮再投"
     }
   },
   "rarity": {

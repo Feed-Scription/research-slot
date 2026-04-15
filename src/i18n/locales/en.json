@@ -166,7 +166,7 @@
   "meta": {
     "best": {
       "label": "Best Paper",
-      "tagline": "Standing ovation. Please prepare your speech."
+      "tagline": "All three reviewers scored it at the top."
     },
     "accept": {
       "label": "Accept",
@@ -174,7 +174,7 @@
     },
     "reject": {
       "label": "Reject",
-      "tagline": "Reviewer 2's birthday cake."
+      "tagline": "Send it next cycle."
     },
     "flavor": {
       "asshole": "AC took it down a tier",
@@ -186,7 +186,7 @@
   "ratings": {
     "best": {
       "label": "Best Paper",
-      "tagline": "Standing ovation. Please prepare your speech."
+      "tagline": "All three reviewers scored it at the top."
     },
     "strong_accept": {
       "label": "Strong Accept",
@@ -194,7 +194,7 @@
     },
     "weak_accept": {
       "label": "Weak Accept",
-      "tagline": "Good enough — take it and run."
+      "tagline": "Just over the bar."
     },
     "borderline": {
       "label": "Borderline",
@@ -206,7 +206,7 @@
     },
     "strong_reject": {
       "label": "Strong Reject",
-      "tagline": "Reviewer 2's birthday cake."
+      "tagline": "Send it next cycle."
     }
   },
   "rarity": {
