@@ -18,9 +18,9 @@ export interface Rating {
  * 进一步受 asshole/godfather 6% 概率调制，普通玩家实测 accept ≈ 25%。
  */
 export const RATINGS: Rating[] = [
-  { id: 'best', score: 10, rarity: 'legendary', weight: 2, color: '#d9a441' },
+  { id: 'best', score: 10, rarity: 'legendary', weight: 1, color: '#d9a441' },
   { id: 'strong_accept', score: 8, rarity: 'epic', weight: 12, color: '#2e4a3e' },
-  { id: 'weak_accept', score: 6, rarity: 'rare', weight: 30, color: '#24406b' },
+  { id: 'weak_accept', score: 6, rarity: 'rare', weight: 31, color: '#24406b' },
   { id: 'borderline', score: 5, rarity: 'common', weight: 26, color: '#6a5f52' },
   { id: 'weak_reject', score: 4, rarity: 'uncommon', weight: 20, color: '#8a5a2a' },
   { id: 'strong_reject', score: 2, rarity: 'cursed', weight: 10, color: '#b7312b' },
