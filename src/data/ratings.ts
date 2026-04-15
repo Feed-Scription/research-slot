@@ -78,8 +78,11 @@ export interface MetaResult {
   flavor: MetaFlavor;
 }
 
-const ASSHOLE_RATE = 0.06; // 高分被傻逼 meta 拒
-const GODFATHER_RATE = 0.06; // 低分被亲爹 meta 收
+/** AC 发疯的概率：主效应（高分拒 / 低分收）。 */
+const ASSHOLE_RATE = 0.15;
+const GODFATHER_RATE = 0.15;
+/** 关系户 AC 直接把 accept 拔成 Best Paper 的单独概率——故意调低，保持 Best 稀有。 */
+const GODFATHER_PROMOTE_RATE = 0.03;
 
 function naturalVerdict(scores: number[]): MetaId {
   if (scores.length === 0) return 'reject';
@@ -90,25 +93,26 @@ function naturalVerdict(scores: number[]): MetaId {
 }
 
 /**
- * 三档裁决，但 meta 有 ~6%/6% 的几率推翻审稿人共识：
- *   - asshole : best → accept / accept → reject
- *   - godfather : reject → accept / accept → best
+ * 三档裁决，meta 有几率推翻审稿人共识：
+ *   - asshole(15%)    : best → accept / accept → reject
+ *   - godfather(15%)  : reject → accept （救稿）
+ *   - godfather 升级(3%) : accept → best （关系户保送 Best Paper）
+ * 最后一档故意调低，避免 Best Paper 失去"传奇"观感。
  */
 export function deriveFinalVerdict(scores: number[]): MetaResult {
   const natural = naturalVerdict(scores);
-  const roll = Math.random();
 
-  if (natural === 'best' && roll < ASSHOLE_RATE) {
-    return { verdict: 'accept', flavor: 'asshole' };
+  if (natural === 'best') {
+    if (Math.random() < ASSHOLE_RATE) return { verdict: 'accept', flavor: 'asshole' };
+    return { verdict: 'best', flavor: 'normal' };
   }
-  if (natural === 'accept' && roll < ASSHOLE_RATE) {
-    return { verdict: 'reject', flavor: 'asshole' };
+  if (natural === 'accept') {
+    const r = Math.random();
+    if (r < ASSHOLE_RATE) return { verdict: 'reject', flavor: 'asshole' };
+    if (r < ASSHOLE_RATE + GODFATHER_PROMOTE_RATE) return { verdict: 'best', flavor: 'godfather' };
+    return { verdict: 'accept', flavor: 'normal' };
   }
-  if (natural === 'reject' && roll < GODFATHER_RATE) {
-    return { verdict: 'accept', flavor: 'godfather' };
-  }
-  if (natural === 'accept' && roll < ASSHOLE_RATE + GODFATHER_RATE) {
-    return { verdict: 'best', flavor: 'godfather' };
-  }
-  return { verdict: natural, flavor: 'normal' };
+  // natural === 'reject'
+  if (Math.random() < GODFATHER_RATE) return { verdict: 'accept', flavor: 'godfather' };
+  return { verdict: 'reject', flavor: 'normal' };
 }

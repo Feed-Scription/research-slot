@@ -165,14 +165,29 @@ export function ResultBurst({ result, onClose }: ResultBurstProps) {
             </div>
 
             <div className="text-center mt-2">
-              {result.metaFlavor !== 'normal' && (
-                <div
-                  className="mb-1 font-mono text-[10px] tracking-[0.28em] uppercase"
-                  style={{ color: result.metaFlavor === 'godfather' ? 'var(--forest)' : 'var(--oxblood)' }}
-                >
-                  ▶ {t(`meta.flavor.${result.metaFlavor}`)}
-                </div>
-              )}
+              {result.metaFlavor !== 'normal' && (() => {
+                const isGodfather = result.metaFlavor === 'godfather';
+                const accent = isGodfather ? 'var(--forest)' : 'var(--oxblood)';
+                return (
+                  <motion.div
+                    initial={{ scale: 0.5, opacity: 0, rotate: isGodfather ? -10 : 10 }}
+                    animate={{ scale: 1, opacity: 1, rotate: isGodfather ? -5 : 6 }}
+                    transition={{ delay: 0.55, type: 'spring', stiffness: 360, damping: 14 }}
+                    className="inline-flex items-center gap-2 mb-3 stamp-text italic px-3 py-1 text-sm sm:text-base border-[3px]"
+                    style={{
+                      color: accent,
+                      borderColor: accent,
+                      boxShadow: `inset 0 0 0 1.5px ${accent}, 0 0 20px ${isGodfather ? 'rgba(46,74,62,0.35)' : 'rgba(183,49,43,0.35)'}`,
+                      background: 'var(--paper)',
+                    }}
+                  >
+                    <span className="text-lg leading-none not-italic">
+                      {isGodfather ? '🤝' : '⚡'}
+                    </span>
+                    <span>{t(`meta.flavor.${result.metaFlavor}`)}</span>
+                  </motion.div>
+                );
+              })()}
               <div className="font-italic-display text-xl italic text-ink">
                 {result.reviewers.every((r) => r.missing)
                   ? t('reels.allMissingTagline')
