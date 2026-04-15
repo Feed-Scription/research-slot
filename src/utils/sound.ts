@@ -33,7 +33,8 @@ function loadBuffer(url: string): Promise<AudioBuffer | null> {
 }
 
 export interface SampleHandle {
-  stop: () => void;
+  /** 淡出后停止（默认 600ms 指数淡出）。 */
+  stop: (fadeMs?: number) => void;
 }
 
 function playSample(url: string, volume = 0.6, opts?: { loop?: boolean }): SampleHandle {
@@ -56,18 +57,20 @@ function playSample(url: string, volume = 0.6, opts?: { loop?: boolean }): Sampl
     gain.connect(cc.destination);
     src.start();
   });
-  handle.stop = () => {
+  handle.stop = (fadeMs = 600) => {
     stopped = true;
+    const fade = Math.max(0, fadeMs) / 1000;
     if (gain && c) {
-      // 20ms 淡出，避免咔嚓声
       const now = c.currentTime;
       gain.gain.cancelScheduledValues(now);
       gain.gain.setValueAtTime(gain.gain.value, now);
-      gain.gain.linearRampToValueAtTime(0, now + 0.05);
+      // 指数曲线听起来更自然（避开 0 值用微小起点）
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + fade);
+      gain.gain.linearRampToValueAtTime(0, now + fade + 0.02);
     }
     if (src) {
       try {
-        src.stop(c ? c.currentTime + 0.06 : undefined);
+        src.stop(c ? c.currentTime + fade + 0.05 : undefined);
       } catch {
         /* ignore */
       }

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { motion, useMotionValue, animate } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { sfx } from '../utils/sound';
 import { EMOJIS_BY_RATING, RATINGS, getRatingById, type Rating } from '../data/ratings';
 import type { Reviewer } from '../store/gameStore';
 
@@ -74,7 +73,6 @@ export function ReviewerReel({ index, finalReviewer, spinning, spinDurationMs, o
       onComplete: () => {
         if (stoppedRef.current) return;
         stoppedRef.current = true;
-        sfx.reelStop();
         onStop?.();
       },
     });

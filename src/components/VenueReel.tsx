@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { motion, useMotionValue, animate } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { sfx } from '../utils/sound';
 import type { Venue } from '../data/venues';
 
 interface Props {
@@ -52,7 +51,6 @@ export function VenueReel({ pool, finalItem, spinning, spinDurationMs, onStop }:
       onComplete: () => {
         if (stoppedRef.current) return;
         stoppedRef.current = true;
-        sfx.reelStop();
         onStop?.();
       },
     });

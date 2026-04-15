@@ -14,7 +14,7 @@ interface Props {
 }
 
 /** 每个滚轮的总动画时长（ms）。尾段用 cubic-bezier 减速，最后一轮落定后 +1s 停留才爆结果。 */
-const SPIN_DURATIONS = [1100, 1400, 1700, 2000] as const;
+const SPIN_DURATIONS = [2200, 2800, 3400, 4000] as const;
 const POST_STOP_HOLD_MS = 1000;
 
 export function SlotMachine({ onRevealResult }: Props) {
