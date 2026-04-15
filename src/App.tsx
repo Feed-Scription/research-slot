@@ -8,6 +8,7 @@ import { PackSelector } from './components/PackSelector';
 import { useGameStore } from './store/gameStore';
 import { setMuted, isMuted } from './utils/sound';
 import { setLang, getLang, type Lang } from './i18n';
+import { BaiduAnalytics } from './analytics/BaiduAnalytics';
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -199,6 +200,8 @@ export default function App() {
         result={showBurst ? result : null}
         onClose={() => setShowBurst(false)}
       />
+
+      <BaiduAnalytics />
     </div>
   );
 }

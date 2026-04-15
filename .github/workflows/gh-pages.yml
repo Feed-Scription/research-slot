@@ -31,6 +31,9 @@ jobs:
       # --base 指向仓库名，确保 /research-slot/ 路径下资源能加载。
       # Vercel 那边用默认 "/"，两者互不影响。
       - run: npx vite build --base=/research-slot/
+        env:
+          # 仓库级 secret。没设置时 BaiduAnalytics 组件不会挂载脚本。
+          VITE_BAIDU_SITE_ID: ${{ secrets.BAIDU_SITE_ID }}
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v4
         with:
