@@ -1,0 +1,12 @@
+{
+  "name": "科研老虎机 · Research Slot",
+  "short_name": "Res.Slot",
+  "description": "Pull the brass lever — three anonymous reviewers decide your paper's fate.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f1ead8",
+  "theme_color": "#1a1613",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" }
+  ]
+}
