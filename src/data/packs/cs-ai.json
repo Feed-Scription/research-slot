@@ -1,0 +1,57 @@
+{
+  "id": "cs-ai",
+  "defaultEnabled": true,
+  "name": {
+    "zh-CN": "CS / AI 主包",
+    "en": "CS / AI Core Pack"
+  },
+  "description": {
+    "zh-CN": "人工智能、机器学习、NLP、CV、系统、数据库方向的顶会顶刊。",
+    "en": "Top venues for AI, ML, NLP, CV, systems, and databases."
+  },
+  "venues": [
+    { "name": "NeurIPS", "tier": "god" },
+    { "name": "ICML", "tier": "god" },
+    { "name": "ICLR", "tier": "god" },
+    { "name": "ACL", "tier": "god" },
+    { "name": "CVPR", "tier": "god" },
+    { "name": "TPAMI", "tier": "god" },
+    { "name": "IJCV", "tier": "god" },
+    { "name": "JMLR", "tier": "god" },
+
+    { "name": "AAAI", "tier": "top" },
+    { "name": "IJCAI", "tier": "top" },
+    { "name": "ICCV", "tier": "top" },
+    { "name": "ECCV", "tier": "top" },
+    { "name": "EMNLP", "tier": "top" },
+    { "name": "NAACL", "tier": "top" },
+    { "name": "KDD", "tier": "top" },
+    { "name": "WWW", "tier": "top" },
+    { "name": "SIGIR", "tier": "top" },
+    { "name": "SIGGRAPH", "tier": "top" },
+    { "name": "ACM MM", "tier": "top" },
+    { "name": "OSDI", "tier": "top" },
+    { "name": "SOSP", "tier": "top" },
+    { "name": "MLSys", "tier": "top" },
+    { "name": "SIGMOD", "tier": "top" },
+    { "name": "VLDB", "tier": "top" },
+    { "name": "TACL", "tier": "top" },
+
+    { "name": "COLING", "tier": "mid" },
+    { "name": "EACL", "tier": "mid" },
+    { "name": "COLT", "tier": "mid" },
+    { "name": "UAI", "tier": "mid" },
+    { "name": "WACV", "tier": "mid" },
+    { "name": "BMVC", "tier": "mid" },
+    { "name": "WSDM", "tier": "mid" },
+    { "name": "CIKM", "tier": "mid" },
+    { "name": "TMLR", "tier": "mid" },
+    { "name": "Findings of ACL", "tier": "mid" },
+    { "name": "Findings of EMNLP", "tier": "mid" },
+
+    { "name": "arXiv", "tier": "meme" },
+    { "name": "Workshop", "tier": "meme" },
+    { "name": "SIGBOVIK", "tier": "meme" },
+    { "name": "OpenReview Public", "tier": "meme" }
+  ]
+}

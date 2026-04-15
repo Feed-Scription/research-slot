@@ -215,16 +215,6 @@
     "common": "NPC",
     "cursed": "Cooked"
   },
-  "packs": {
-    "cs-ai": {
-      "name": "CS / AI Core Pack",
-      "description": "Top venues for AI, ML, NLP, CV, systems, and databases."
-    },
-    "bio-med": {
-      "name": "Bio / Medicine DLC",
-      "description": "Nature, Science, Cell, NEJM, Lancet and other cross-disciplinary journals."
-    }
-  },
   "panels": {
     "subscribed": "Subscribed Packs",
     "subscribedSub": "Content Library",

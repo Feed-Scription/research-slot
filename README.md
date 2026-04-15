@@ -38,6 +38,10 @@ npm run dev
 npm run build
 ```
 
+## Contributing
+
+Adding your own field takes **one JSON file** — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
 ## License
 
 Apache 2, with apologies to Reviewer 2.

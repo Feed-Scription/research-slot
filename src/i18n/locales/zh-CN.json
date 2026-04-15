@@ -215,16 +215,6 @@
     "common": "NPC",
     "cursed": "拉完了"
   },
-  "packs": {
-    "cs-ai": {
-      "name": "CS / AI 主包",
-      "description": "人工智能、机器学习、NLP、CV、系统、数据库方向的顶会顶刊。"
-    },
-    "bio-med": {
-      "name": "生物 / 医学 DLC",
-      "description": "Nature、Science、Cell、NEJM、Lancet 等跨学科顶刊。"
-    }
-  },
   "panels": {
     "subscribed": "订阅内容包",
     "subscribedSub": "Subscribed Journals",

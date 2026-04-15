@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { ALL_PACKS } from '../data/venues';
+import { ALL_PACKS, type Locale } from '../data/venues';
 import { useGameStore } from '../store/gameStore';
 
 export function PackSelector() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang: Locale = i18n.language.startsWith('zh') ? 'zh-CN' : 'en';
   const enabled = useGameStore((s) => s.enabledPackIds);
   const toggle = useGameStore((s) => s.togglePack);
 
@@ -42,10 +43,10 @@ export function PackSelector() {
                 </span>
               </div>
               <div className="font-display font-black italic text-lg leading-tight text-ink">
-                {t(`packs.${p.id}.name`)}
+                {p.name[lang]}
               </div>
               <div className="font-serif text-[12px] text-ink-soft mt-1 leading-snug">
-                {t(`packs.${p.id}.description`)}
+                {p.description[lang]}
               </div>
               <div className="font-mono text-[10px] text-ink-muted mt-1.5">
                 {t('panels.entries', { n: p.venues.length })}
