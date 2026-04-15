@@ -78,9 +78,9 @@ const CS_AI_PACK: VenuePack = {
 };
 
 /**
- * 生物 / 医学 DLC（默认关闭）
+ * 生物 / 医学 DLC（暂时隐藏，未来发布时再加回 ALL_PACKS）
  */
-const BIO_MED_PACK: VenuePack = {
+const _BIO_MED_PACK: VenuePack = {
   id: 'bio-med',
   defaultEnabled: false,
   venues: [
@@ -93,8 +93,9 @@ const BIO_MED_PACK: VenuePack = {
     { name: 'PNAS', tier: 'top' },
   ],
 };
+void _BIO_MED_PACK; // 静态保留，避免 ts noUnused 报错
 
-export const ALL_PACKS: VenuePack[] = [CS_AI_PACK, BIO_MED_PACK];
+export const ALL_PACKS: VenuePack[] = [CS_AI_PACK];
 
 export function getActiveVenues(enabledPackIds: string[]): Venue[] {
   const ids = new Set(enabledPackIds);
