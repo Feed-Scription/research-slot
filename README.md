@@ -40,4 +40,4 @@ npm run build
 
 ## License
 
-MIT, with apologies to Reviewer 2.
+Apache 2, with apologies to Reviewer 2.

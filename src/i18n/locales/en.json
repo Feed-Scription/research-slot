@@ -18,15 +18,16 @@
     "title": "Peer Review Apparatus",
     "sub": "§ an academic contraption for the acceleration of scholarly fate §",
     "certified": "CERTIFIED",
-    "issn": "ISSN 19—74"
+    "issn": "ISSN 96-314"
   },
-  "form7b": "Form 7-B · App. № 1974",
+  "form7b": "Form 3-14 · App. № 1996",
   "lever": {
     "figCaption": "FIG. IV",
     "figSub": "initiator",
     "aria": "PULL — PRIMARY INITIATOR",
     "pullToEngage": "↓ pull to engage",
-    "inOperation": "↻ in operation"
+    "inOperation": "↻ in operation",
+    "noPackHint": "Please subscribe to at least one content pack. Other fields are not yet supported — contributions welcome!"
   },
   "reels": {
     "venue": "VENUE",
@@ -48,7 +49,9 @@
     "reviewMissing": "REVIEW MISSING",
     "reviewMissingShort": "OVERDUE",
     "reviewMissingNote": "reviewer never submitted",
-    "allMissingTagline": "no reviewers showed up — AC made the call alone"
+    "allMissingTagline": "no reviewers showed up — AC made the call alone",
+    "noVenueTitle": "No pack",
+    "noVenueNote": "Please subscribe to at least one journal/conference pack on the right"
   },
   "wish": {
     "off": "★ wish",
@@ -242,9 +245,10 @@
     "bestPaper": "best paper"
   },
   "burst": {
-    "certificateOf": "Certificate of Peer Review · Form 7-B",
+    "certificateOf": "Certificate of Peer Review · Form 3-14",
     "decision": "decision rendered",
     "dismiss": "tap outside to dismiss",
+    "close": "Close",
     "certified": "· {{rarity}} · certified ·"
   },
   "buttons": {
@@ -265,7 +269,7 @@
     "friendsPrefix": "kindred spirit →",
     "friendsLabel": "Will my paper be accepted?"
   },
-  "patent": "Patent pending — apparatus comprising four independent specimen windows, one (1) brass initiator, and a tripartite meta-arbitration mechanism for the forecasting of editorial outcomes, per Ordinance § 6-B.",
+  "patent": "REVIEWING — apparatus comprising four independent specimen windows, one (1) brass initiator, and a tripartite arbitration mechanism for the forecasting of editorial outcomes, per Ordinance § 3-14.",
   "lang": {
     "zh": "中",
     "en": "EN"
