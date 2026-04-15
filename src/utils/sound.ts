@@ -32,23 +32,54 @@ function loadBuffer(url: string): Promise<AudioBuffer | null> {
   return p;
 }
 
-async function playSample(url: string, volume = 0.6) {
-  const c = getCtx();
-  if (!c || muted) return;
-  const buf = await loadBuffer(url);
-  if (!buf) return;
-  const src = c.createBufferSource();
-  src.buffer = buf;
-  const gain = c.createGain();
-  gain.gain.value = volume;
-  src.connect(gain);
-  gain.connect(c.destination);
-  src.start();
+export interface SampleHandle {
+  stop: () => void;
 }
 
-/** 预取拉杆音效，避免第一次点击时延迟。在用户首次交互后调用。 */
+function playSample(url: string, volume = 0.6, opts?: { loop?: boolean }): SampleHandle {
+  const c = getCtx();
+  const handle: SampleHandle = { stop: () => {} };
+  if (!c || muted) return handle;
+  let stopped = false;
+  let src: AudioBufferSourceNode | null = null;
+  let gain: GainNode | null = null;
+  void loadBuffer(url).then((buf) => {
+    if (!buf || stopped) return;
+    const cc = getCtx();
+    if (!cc) return;
+    src = cc.createBufferSource();
+    src.buffer = buf;
+    src.loop = !!opts?.loop;
+    gain = cc.createGain();
+    gain.gain.value = volume;
+    src.connect(gain);
+    gain.connect(cc.destination);
+    src.start();
+  });
+  handle.stop = () => {
+    stopped = true;
+    if (gain && c) {
+      // 20ms 淡出，避免咔嚓声
+      const now = c.currentTime;
+      gain.gain.cancelScheduledValues(now);
+      gain.gain.setValueAtTime(gain.gain.value, now);
+      gain.gain.linearRampToValueAtTime(0, now + 0.05);
+    }
+    if (src) {
+      try {
+        src.stop(c ? c.currentTime + 0.06 : undefined);
+      } catch {
+        /* ignore */
+      }
+    }
+  };
+  return handle;
+}
+
+/** 预取音效文件，避免第一次触发时的解码延迟。 */
 export function prewarmSfx() {
   void loadBuffer('/sounds/lever-pull.mp3');
+  void loadBuffer('/sounds/reel-spin.mp3');
 }
 
 type ToneOpts = {
@@ -82,6 +113,7 @@ function tone({ freq, duration = 0.12, type = 'square', volume = 0.15, attack = 
 
 export const sfx = {
   leverPull: () => void playSample('/sounds/lever-pull.mp3', 0.6),
+  reelSpin: (): SampleHandle => playSample('/sounds/reel-spin.mp3', 0.45, { loop: false }),
   reelTick: () => tone({ freq: 520, duration: 0.04, type: 'square', volume: 0.08 }),
   reelStop: () => tone({ freq: 180, duration: 0.08, type: 'square', volume: 0.12 }),
   winLegendary: () => {

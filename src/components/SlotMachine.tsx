@@ -6,7 +6,7 @@ import { getActiveVenues } from '../data/venues';
 import { VenueReel } from './VenueReel';
 import { ReviewerReel } from './ReviewerReel';
 import { Lever } from './Lever';
-import { sfx } from '../utils/sound';
+import { sfx, type SampleHandle } from '../utils/sound';
 import { getMetaRatingById } from '../data/ratings';
 
 interface Props {
@@ -30,6 +30,7 @@ export function SlotMachine({ onRevealResult }: Props) {
   const [pulled, setPulled] = useState(false);
   const [showNoPackHint, setShowNoPackHint] = useState(false);
   const stopCountRef = useRef(0);
+  const spinSoundRef = useRef<SampleHandle | null>(null);
 
   const spinning = phase === 'spinning';
   const displayed = pending ?? result;
@@ -47,6 +48,9 @@ export function SlotMachine({ onRevealResult }: Props) {
     stopCountRef.current = 0;
     setPulled(true);
     sfx.leverPull();
+    // 拉杆响后紧跟转轴声，最后一轮落定时停掉
+    spinSoundRef.current?.stop();
+    spinSoundRef.current = sfx.reelSpin();
     spin();
     window.setTimeout(() => setPulled(false), 620);
   };
@@ -54,7 +58,9 @@ export function SlotMachine({ onRevealResult }: Props) {
   const handleReelStop = () => {
     stopCountRef.current += 1;
     if (stopCountRef.current >= 4) {
-      // 最后一轮落定：先停留 1 秒让观众看清楚，再结算 + 爆结果
+      // 最后一轮落定：停掉转轴声，先停留 1 秒让观众看清楚，再结算 + 爆结果
+      spinSoundRef.current?.stop();
+      spinSoundRef.current = null;
       const rarity = pending ? getMetaRatingById(pending.finalVerdict).rarity : 'common';
       window.setTimeout(() => {
         reveal();
