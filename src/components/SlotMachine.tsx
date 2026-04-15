@@ -7,7 +7,6 @@ import { VenueReel } from './VenueReel';
 import { ReviewerReel } from './ReviewerReel';
 import { Lever } from './Lever';
 import { sfx, type SampleHandle } from '../utils/sound';
-import { getMetaRatingById } from '../data/ratings';
 
 interface Props {
   onRevealResult: () => void;
@@ -61,15 +60,12 @@ export function SlotMachine({ onRevealResult }: Props) {
       // 最后一轮落定：停掉转轴声，先停留 1 秒让观众看清楚，再结算 + 爆结果
       spinSoundRef.current?.stop();
       spinSoundRef.current = null;
-      const rarity = pending ? getMetaRatingById(pending.finalVerdict).rarity : 'common';
+      const verdict = pending?.finalVerdict;
       window.setTimeout(() => {
         reveal();
-        if (rarity === 'legendary') sfx.winLegendary();
-        else if (rarity === 'epic') sfx.winEpic();
-        else if (rarity === 'rare') sfx.winRare();
-        else if (rarity === 'cursed') sfx.curse();
-        else if (rarity === 'uncommon') sfx.lose();
-        else sfx.winCommon();
+        if (verdict === 'best') sfx.winBestPaper();
+        else if (verdict === 'accept') sfx.winAccept();
+        else if (verdict === 'reject') sfx.curse();
         onRevealResult();
       }, POST_STOP_HOLD_MS);
     }

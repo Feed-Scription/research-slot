@@ -83,6 +83,8 @@ function playSample(url: string, volume = 0.6, opts?: { loop?: boolean }): Sampl
 export function prewarmSfx() {
   void loadBuffer('/sounds/lever-pull.mp3');
   void loadBuffer('/sounds/reel-spin.mp3');
+  void loadBuffer('/sounds/accept.mp3');
+  void loadBuffer('/sounds/crowd-cheer.mp3');
 }
 
 type ToneOpts = {
@@ -117,6 +119,12 @@ function tone({ freq, duration = 0.12, type = 'square', volume = 0.15, attack = 
 export const sfx = {
   leverPull: () => void playSample('/sounds/lever-pull.mp3', 0.6),
   reelSpin: (): SampleHandle => playSample('/sounds/reel-spin.mp3', 0.45, { loop: false }),
+  winAccept: () => void playSample('/sounds/accept.mp3', 0.7),
+  /** Best Paper：happy + 全场欢呼叠加。 */
+  winBestPaper: () => {
+    void playSample('/sounds/accept.mp3', 0.7);
+    void playSample('/sounds/crowd-cheer.mp3', 0.55);
+  },
   reelTick: () => tone({ freq: 520, duration: 0.04, type: 'square', volume: 0.08 }),
   reelStop: () => tone({ freq: 180, duration: 0.08, type: 'square', volume: 0.12 }),
   winLegendary: () => {
