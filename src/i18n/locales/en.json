@@ -177,8 +177,10 @@
       "tagline": "Reviewer 2's birthday cake."
     },
     "flavor": {
-      "asshole": "AC overruled the panel",
-      "godfather": "AC saved the paper (knows the authors)"
+      "asshole": "AC: one tier down",
+      "asshole_extreme": "AC: Best Paper → Reject",
+      "godfather": "AC: one tier up",
+      "godfather_extreme": "AC: Reject → Best Paper"
     }
   },
   "ratings": {

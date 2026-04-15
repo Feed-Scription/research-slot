@@ -177,8 +177,10 @@
       "tagline": "Reviewer 2 的生日蛋糕"
     },
     "flavor": {
-      "asshole": "AC 一票否决 · 审稿人共识无效",
-      "godfather": "AC 力排众议 · 关系户保送"
+      "asshole": "AC 下调一档",
+      "asshole_extreme": "AC 裁决：Best Paper → Reject",
+      "godfather": "AC 上调一档",
+      "godfather_extreme": "AC 裁决：Reject → Best Paper"
     }
   },
   "ratings": {

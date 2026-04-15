@@ -166,25 +166,33 @@ export function ResultBurst({ result, onClose }: ResultBurstProps) {
 
             <div className="text-center mt-2">
               {result.metaFlavor !== 'normal' && (() => {
-                const isGodfather = result.metaFlavor === 'godfather';
-                const accent = isGodfather ? 'var(--forest)' : 'var(--oxblood)';
+                const f = result.metaFlavor;
+                const isGod = f === 'godfather' || f === 'godfather_extreme';
+                const isExtreme = f === 'asshole_extreme' || f === 'godfather_extreme';
+                const accent = isGod ? 'var(--forest)' : 'var(--oxblood)';
+                const glow = isGod ? 'rgba(46,74,62,0.4)' : 'rgba(183,49,43,0.4)';
+                const icon = f === 'asshole' ? '↓'
+                  : f === 'asshole_extreme' ? '⇊'
+                  : f === 'godfather' ? '↑'
+                  : '⇈';
                 return (
                   <motion.div
-                    initial={{ scale: 0.5, opacity: 0, rotate: isGodfather ? -10 : 10 }}
-                    animate={{ scale: 1, opacity: 1, rotate: isGodfather ? -5 : 6 }}
+                    initial={{ scale: 0.5, opacity: 0, rotate: isGod ? -10 : 10 }}
+                    animate={{ scale: 1, opacity: 1, rotate: isGod ? -5 : 6 }}
                     transition={{ delay: 0.55, type: 'spring', stiffness: 360, damping: 14 }}
-                    className="inline-flex items-center gap-2 mb-3 stamp-text italic px-3 py-1 text-sm sm:text-base border-[3px]"
+                    className={`inline-flex items-center gap-2 mb-3 stamp-text italic px-3 py-1 border-[3px] ${
+                      isExtreme ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
+                    }`}
                     style={{
                       color: accent,
                       borderColor: accent,
-                      boxShadow: `inset 0 0 0 1.5px ${accent}, 0 0 20px ${isGodfather ? 'rgba(46,74,62,0.35)' : 'rgba(183,49,43,0.35)'}`,
+                      boxShadow: `inset 0 0 0 1.5px ${accent}, 0 0 ${isExtreme ? 32 : 20}px ${glow}`,
                       background: 'var(--paper)',
                     }}
                   >
-                    <span className="text-lg leading-none not-italic">
-                      {isGodfather ? '🤝' : '⚡'}
-                    </span>
-                    <span>{t(`meta.flavor.${result.metaFlavor}`)}</span>
+                    <span className="text-lg leading-none not-italic">{icon}</span>
+                    <span>{t(`meta.flavor.${f}`)}</span>
+                    {isExtreme && <span className="text-lg leading-none not-italic">{icon}</span>}
                   </motion.div>
                 );
               })()}

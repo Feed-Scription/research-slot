@@ -64,25 +64,38 @@ export function getMetaRatingById(id: MetaId): MetaRating {
   return META_RATINGS[id] ?? META_RATINGS.reject;
 }
 
-/* ---------- Meta 个人偏差 ---------- */
+/* ---------- Meta 偏差 ---------- */
 
 /**
- * - normal     : meta 按审稿人均分给结论
- * - asshole    : 傻逼 meta — 高分也拒（reviewer 共识被强行下调一档）
- * - godfather  : 亲爹 meta — 低分也收（强行上调一档）
+ * AC 的最终裁决相对于审稿人共识的偏移：
+ * - normal            : 按审稿人均分给结论
+ * - asshole           : 下调一档（best→accept / accept→reject）
+ * - asshole_extreme   : 从 best 直接降到 reject
+ * - godfather         : 上调一档（reject→accept / accept→best）
+ * - godfather_extreme : 从 reject 直接升到 best
+ * 命名来自社区俗语，含义仅指行为方向，不做评价。
  */
-export type MetaFlavor = 'normal' | 'asshole' | 'godfather';
+export type MetaFlavor =
+  | 'normal'
+  | 'asshole'
+  | 'asshole_extreme'
+  | 'godfather'
+  | 'godfather_extreme';
 
 export interface MetaResult {
   verdict: MetaId;
   flavor: MetaFlavor;
 }
 
-/** AC 发疯的概率：主效应（高分拒 / 低分收）。 */
+/** AC 下调一档 / 上调一档 的基础概率。 */
 const ASSHOLE_RATE = 0.15;
 const GODFATHER_RATE = 0.15;
-/** 关系户 AC 直接把 accept 拔成 Best Paper 的单独概率——故意调低，保持 Best 稀有。 */
+/** 在 natural=accept 时把结果升到 best 的条件概率——保持 Best 稀有。 */
 const GODFATHER_PROMOTE_RATE = 0.03;
+
+/** 跨两档的极端偏移，仅在对应 natural 档触发。 */
+const BEST_TO_REJECT_RATE = 0.1; // 在 natural=best 时触发，整体 ~0.01%
+const REJECT_TO_BEST_RATE = 0.01; // 在 natural=reject 时触发，整体 ~0.72%
 
 function naturalVerdict(scores: number[]): MetaId {
   if (scores.length === 0) return 'reject';
@@ -93,17 +106,18 @@ function naturalVerdict(scores: number[]): MetaId {
 }
 
 /**
- * 三档裁决，meta 有几率推翻审稿人共识：
- *   - asshole(15%)    : best → accept / accept → reject
- *   - godfather(15%)  : reject → accept （救稿）
- *   - godfather 升级(3%) : accept → best （关系户保送 Best Paper）
- * 最后一档故意调低，避免 Best Paper 失去"传奇"观感。
+ * AC 最终裁决映射。三档 natural 各自独立抛骰：
+ *   natural=best   : 10% → reject (extreme) / 15% → accept (asshole) / 75% → best
+ *   natural=accept : 15% → reject (asshole)  /  3% → best (godfather)  / 82% → accept
+ *   natural=reject :  1% → best (extreme)    / 15% → accept (godfather)/ 84% → reject
  */
 export function deriveFinalVerdict(scores: number[]): MetaResult {
   const natural = naturalVerdict(scores);
 
   if (natural === 'best') {
-    if (Math.random() < ASSHOLE_RATE) return { verdict: 'accept', flavor: 'asshole' };
+    const r = Math.random();
+    if (r < BEST_TO_REJECT_RATE) return { verdict: 'reject', flavor: 'asshole_extreme' };
+    if (r < BEST_TO_REJECT_RATE + ASSHOLE_RATE) return { verdict: 'accept', flavor: 'asshole' };
     return { verdict: 'best', flavor: 'normal' };
   }
   if (natural === 'accept') {
@@ -113,6 +127,8 @@ export function deriveFinalVerdict(scores: number[]): MetaResult {
     return { verdict: 'accept', flavor: 'normal' };
   }
   // natural === 'reject'
-  if (Math.random() < GODFATHER_RATE) return { verdict: 'accept', flavor: 'godfather' };
+  const r = Math.random();
+  if (r < REJECT_TO_BEST_RATE) return { verdict: 'best', flavor: 'godfather_extreme' };
+  if (r < REJECT_TO_BEST_RATE + GODFATHER_RATE) return { verdict: 'accept', flavor: 'godfather' };
   return { verdict: 'reject', flavor: 'normal' };
 }
