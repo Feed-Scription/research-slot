@@ -165,14 +165,37 @@ export function ResultBurst({ result, onClose }: ResultBurstProps) {
             </div>
 
             <div className="text-center mt-2">
-              {result.metaFlavor !== 'normal' && (
-                <div
-                  className="mb-1 font-mono text-[10px] tracking-[0.28em] uppercase"
-                  style={{ color: result.metaFlavor === 'godfather' ? 'var(--forest)' : 'var(--oxblood)' }}
-                >
-                  ▶ {t(`meta.flavor.${result.metaFlavor}`)}
-                </div>
-              )}
+              {result.metaFlavor !== 'normal' && (() => {
+                const f = result.metaFlavor;
+                const isGod = f === 'godfather' || f === 'godfather_extreme';
+                const isExtreme = f === 'asshole_extreme' || f === 'godfather_extreme';
+                const accent = isGod ? 'var(--forest)' : 'var(--oxblood)';
+                const glow = isGod ? 'rgba(46,74,62,0.4)' : 'rgba(183,49,43,0.4)';
+                const icon = f === 'asshole' ? '↓'
+                  : f === 'asshole_extreme' ? '⇊'
+                  : f === 'godfather' ? '↑'
+                  : '⇈';
+                return (
+                  <motion.div
+                    initial={{ scale: 0.5, opacity: 0, rotate: isGod ? -10 : 10 }}
+                    animate={{ scale: 1, opacity: 1, rotate: isGod ? -5 : 6 }}
+                    transition={{ delay: 0.55, type: 'spring', stiffness: 360, damping: 14 }}
+                    className={`inline-flex items-center gap-2 mb-3 stamp-text italic px-3 py-1 border-[3px] ${
+                      isExtreme ? 'text-base sm:text-lg' : 'text-sm sm:text-base'
+                    }`}
+                    style={{
+                      color: accent,
+                      borderColor: accent,
+                      boxShadow: `inset 0 0 0 1.5px ${accent}, 0 0 ${isExtreme ? 32 : 20}px ${glow}`,
+                      background: 'var(--paper)',
+                    }}
+                  >
+                    <span className="text-lg leading-none not-italic">{icon}</span>
+                    <span>{t(`meta.flavor.${f}`)}</span>
+                    {isExtreme && <span className="text-lg leading-none not-italic">{icon}</span>}
+                  </motion.div>
+                );
+              })()}
               <div className="font-italic-display text-xl italic text-ink">
                 {result.reviewers.every((r) => r.missing)
                   ? t('reels.allMissingTagline')

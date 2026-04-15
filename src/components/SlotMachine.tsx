@@ -6,15 +6,14 @@ import { getActiveVenues } from '../data/venues';
 import { VenueReel } from './VenueReel';
 import { ReviewerReel } from './ReviewerReel';
 import { Lever } from './Lever';
-import { sfx } from '../utils/sound';
-import { getMetaRatingById } from '../data/ratings';
+import { sfx, type SampleHandle } from '../utils/sound';
 
 interface Props {
   onRevealResult: () => void;
 }
 
 /** 每个滚轮的总动画时长（ms）。尾段用 cubic-bezier 减速，最后一轮落定后 +1s 停留才爆结果。 */
-const SPIN_DURATIONS = [1100, 1400, 1700, 2000] as const;
+const SPIN_DURATIONS = [2200, 2800, 3400, 4000] as const;
 const POST_STOP_HOLD_MS = 1000;
 
 export function SlotMachine({ onRevealResult }: Props) {
@@ -30,6 +29,7 @@ export function SlotMachine({ onRevealResult }: Props) {
   const [pulled, setPulled] = useState(false);
   const [showNoPackHint, setShowNoPackHint] = useState(false);
   const stopCountRef = useRef(0);
+  const spinSoundRef = useRef<SampleHandle | null>(null);
 
   const spinning = phase === 'spinning';
   const displayed = pending ?? result;
@@ -47,6 +47,9 @@ export function SlotMachine({ onRevealResult }: Props) {
     stopCountRef.current = 0;
     setPulled(true);
     sfx.leverPull();
+    // 拉杆响后紧跟转轴声，最后一轮落定时停掉
+    spinSoundRef.current?.stop();
+    spinSoundRef.current = sfx.reelSpin();
     spin();
     window.setTimeout(() => setPulled(false), 620);
   };
@@ -54,16 +57,15 @@ export function SlotMachine({ onRevealResult }: Props) {
   const handleReelStop = () => {
     stopCountRef.current += 1;
     if (stopCountRef.current >= 4) {
-      // 最后一轮落定：先停留 1 秒让观众看清楚，再结算 + 爆结果
-      const rarity = pending ? getMetaRatingById(pending.finalVerdict).rarity : 'common';
+      // 最后一轮落定：停掉转轴声，先停留 1 秒让观众看清楚，再结算 + 爆结果
+      spinSoundRef.current?.stop();
+      spinSoundRef.current = null;
+      const verdict = pending?.finalVerdict;
       window.setTimeout(() => {
         reveal();
-        if (rarity === 'legendary') sfx.winLegendary();
-        else if (rarity === 'epic') sfx.winEpic();
-        else if (rarity === 'rare') sfx.winRare();
-        else if (rarity === 'cursed') sfx.curse();
-        else if (rarity === 'uncommon') sfx.lose();
-        else sfx.winCommon();
+        if (verdict === 'best') sfx.winBestPaper();
+        else if (verdict === 'accept') sfx.winAccept();
+        else if (verdict === 'reject') sfx.curse();
         onRevealResult();
       }, POST_STOP_HOLD_MS);
     }

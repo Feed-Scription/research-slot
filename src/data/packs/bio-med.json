@@ -1,0 +1,23 @@
+{
+  "_comment": "未发布草稿 · hidden:true 表示不出现在订阅面板里。将来想上线改成 false 即可。",
+  "id": "bio-med",
+  "hidden": true,
+  "defaultEnabled": false,
+  "name": {
+    "zh-CN": "生物 / 医学 DLC",
+    "en": "Bio / Medicine DLC"
+  },
+  "description": {
+    "zh-CN": "Nature、Science、Cell、NEJM、Lancet 等跨学科顶刊。",
+    "en": "Nature, Science, Cell, NEJM, Lancet and other cross-disciplinary journals."
+  },
+  "venues": [
+    { "name": "Nature", "tier": "god" },
+    { "name": "Science", "tier": "god" },
+    { "name": "Cell", "tier": "god" },
+    { "name": "NEJM", "tier": "god" },
+    { "name": "Lancet", "tier": "top" },
+    { "name": "Nature Methods", "tier": "top" },
+    { "name": "PNAS", "tier": "top" }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "_comment": "复制这个文件 → 重命名成你学科的 slug（例如 physics.json, econ.json, neuroscience.json）→ 改下面的字段 → 提 PR 就行。`_` 前缀的文件会被构建忽略，所以模板本身不会被加载。",
+  "id": "your-field-slug",
+  "defaultEnabled": false,
+  "hidden": false,
+  "name": {
+    "zh-CN": "学科中文名",
+    "en": "Field name in English"
+  },
+  "description": {
+    "zh-CN": "一两句话的学科方向 / 涵盖范围描述。",
+    "en": "A short sentence describing the field."
+  },
+  "venues": [
+    { "name": "期刊/会议名（保持原文）", "tier": "god" },
+    { "name": "Another Venue", "tier": "top" },
+    { "name": "Some Venue", "tier": "mid" },
+    { "name": "Meme / 玩梗的 venue", "tier": "meme" }
+  ]
+}

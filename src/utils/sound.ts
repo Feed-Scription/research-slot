@@ -12,6 +12,85 @@ function getCtx(): AudioContext | null {
   return ctx;
 }
 
+/* ---------- MP3 一次性加载 + 缓存 ---------- */
+
+/** Vite 在 GH Pages 上 base=/research-slot/，在 Vercel 上 base=/。拼路径时用它。 */
+const BASE = import.meta.env.BASE_URL;
+const asset = (p: string) => `${BASE}${p.replace(/^\//, '')}`;
+
+const bufferCache = new Map<string, Promise<AudioBuffer | null>>();
+
+function loadBuffer(url: string): Promise<AudioBuffer | null> {
+  if (bufferCache.has(url)) return bufferCache.get(url)!;
+  const c = getCtx();
+  if (!c) {
+    const fail = Promise.resolve<AudioBuffer | null>(null);
+    bufferCache.set(url, fail);
+    return fail;
+  }
+  const p = fetch(url)
+    .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error('fetch failed'))))
+    .then((buf) => c.decodeAudioData(buf))
+    .catch(() => null);
+  bufferCache.set(url, p);
+  return p;
+}
+
+export interface SampleHandle {
+  /** 淡出后停止（默认 600ms 指数淡出）。 */
+  stop: (fadeMs?: number) => void;
+}
+
+function playSample(url: string, volume = 0.6, opts?: { loop?: boolean }): SampleHandle {
+  const c = getCtx();
+  const handle: SampleHandle = { stop: () => {} };
+  if (!c || muted) return handle;
+  let stopped = false;
+  let src: AudioBufferSourceNode | null = null;
+  let gain: GainNode | null = null;
+  void loadBuffer(url).then((buf) => {
+    if (!buf || stopped) return;
+    const cc = getCtx();
+    if (!cc) return;
+    src = cc.createBufferSource();
+    src.buffer = buf;
+    src.loop = !!opts?.loop;
+    gain = cc.createGain();
+    gain.gain.value = volume;
+    src.connect(gain);
+    gain.connect(cc.destination);
+    src.start();
+  });
+  handle.stop = (fadeMs = 600) => {
+    stopped = true;
+    const fade = Math.max(0, fadeMs) / 1000;
+    if (gain && c) {
+      const now = c.currentTime;
+      gain.gain.cancelScheduledValues(now);
+      gain.gain.setValueAtTime(gain.gain.value, now);
+      // 指数曲线听起来更自然（避开 0 值用微小起点）
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + fade);
+      gain.gain.linearRampToValueAtTime(0, now + fade + 0.02);
+    }
+    if (src) {
+      try {
+        src.stop(c ? c.currentTime + fade + 0.05 : undefined);
+      } catch {
+        /* ignore */
+      }
+    }
+  };
+  return handle;
+}
+
+/** 预取音效文件，避免第一次触发时的解码延迟。 */
+export function prewarmSfx() {
+  void loadBuffer(asset('sounds/lever-pull.mp3'));
+  void loadBuffer(asset('sounds/reel-spin.mp3'));
+  void loadBuffer(asset('sounds/accept.mp3'));
+  void loadBuffer(asset('sounds/crowd-cheer.mp3'));
+}
+
 type ToneOpts = {
   freq: number;
   duration?: number;
@@ -42,7 +121,14 @@ function tone({ freq, duration = 0.12, type = 'square', volume = 0.15, attack = 
 }
 
 export const sfx = {
-  leverPull: () => tone({ freq: 220, slideTo: 80, duration: 0.28, type: 'sawtooth', volume: 0.18 }),
+  leverPull: () => void playSample(asset('sounds/lever-pull.mp3'), 0.6),
+  reelSpin: (): SampleHandle => playSample(asset('sounds/reel-spin.mp3'), 0.45, { loop: false }),
+  winAccept: () => void playSample(asset('sounds/accept.mp3'), 0.7),
+  /** Best Paper：happy + 全场欢呼叠加。 */
+  winBestPaper: () => {
+    void playSample(asset('sounds/accept.mp3'), 0.7);
+    void playSample(asset('sounds/crowd-cheer.mp3'), 0.55);
+  },
   reelTick: () => tone({ freq: 520, duration: 0.04, type: 'square', volume: 0.08 }),
   reelStop: () => tone({ freq: 180, duration: 0.08, type: 'square', volume: 0.12 }),
   winLegendary: () => {

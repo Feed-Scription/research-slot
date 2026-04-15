@@ -166,7 +166,7 @@
   "meta": {
     "best": {
       "label": "Best Paper",
-      "tagline": "Standing ovation. Please prepare your speech."
+      "tagline": "All three reviewers scored it at the top."
     },
     "accept": {
       "label": "Accept",
@@ -174,17 +174,19 @@
     },
     "reject": {
       "label": "Reject",
-      "tagline": "Reviewer 2's birthday cake."
+      "tagline": "Send it next cycle."
     },
     "flavor": {
-      "asshole": "AC overruled the panel",
-      "godfather": "AC saved the paper (knows the authors)"
+      "asshole": "AC took it down a tier",
+      "asshole_extreme": "AC walked it all the way to Reject",
+      "godfather": "AC bumped it up a tier",
+      "godfather_extreme": "AC walked it all the way to Best Paper"
     }
   },
   "ratings": {
     "best": {
       "label": "Best Paper",
-      "tagline": "Standing ovation. Please prepare your speech."
+      "tagline": "All three reviewers scored it at the top."
     },
     "strong_accept": {
       "label": "Strong Accept",
@@ -192,7 +194,7 @@
     },
     "weak_accept": {
       "label": "Weak Accept",
-      "tagline": "Good enough — take it and run."
+      "tagline": "Just over the bar."
     },
     "borderline": {
       "label": "Borderline",
@@ -204,7 +206,7 @@
     },
     "strong_reject": {
       "label": "Strong Reject",
-      "tagline": "Reviewer 2's birthday cake."
+      "tagline": "Send it next cycle."
     }
   },
   "rarity": {
@@ -214,16 +216,6 @@
     "uncommon": "Based",
     "common": "NPC",
     "cursed": "Cooked"
-  },
-  "packs": {
-    "cs-ai": {
-      "name": "CS / AI Core Pack",
-      "description": "Top venues for AI, ML, NLP, CV, systems, and databases."
-    },
-    "bio-med": {
-      "name": "Bio / Medicine DLC",
-      "description": "Nature, Science, Cell, NEJM, Lancet and other cross-disciplinary journals."
-    }
   },
   "panels": {
     "subscribed": "Subscribed Packs",

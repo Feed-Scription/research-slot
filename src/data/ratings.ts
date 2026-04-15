@@ -12,13 +12,18 @@ export interface Rating {
   color: string;
 }
 
+/**
+ * 单审稿人评级权重（普通模式）。
+ * 期望值 ≈ 5.26，三审平均 ≥6 的概率 ~23%，折算到 meta 三档裁决时
+ * 进一步受 asshole/godfather 6% 概率调制，普通玩家实测 accept ≈ 25%。
+ */
 export const RATINGS: Rating[] = [
   { id: 'best', score: 10, rarity: 'legendary', weight: 1, color: '#d9a441' },
-  { id: 'strong_accept', score: 8, rarity: 'epic', weight: 5, color: '#2e4a3e' },
-  { id: 'weak_accept', score: 6, rarity: 'rare', weight: 20, color: '#24406b' },
-  { id: 'borderline', score: 5, rarity: 'common', weight: 34, color: '#6a5f52' },
-  { id: 'weak_reject', score: 4, rarity: 'uncommon', weight: 25, color: '#8a5a2a' },
-  { id: 'strong_reject', score: 2, rarity: 'cursed', weight: 15, color: '#b7312b' },
+  { id: 'strong_accept', score: 8, rarity: 'epic', weight: 12, color: '#2e4a3e' },
+  { id: 'weak_accept', score: 6, rarity: 'rare', weight: 31, color: '#24406b' },
+  { id: 'borderline', score: 5, rarity: 'common', weight: 26, color: '#6a5f52' },
+  { id: 'weak_reject', score: 4, rarity: 'uncommon', weight: 20, color: '#8a5a2a' },
+  { id: 'strong_reject', score: 2, rarity: 'cursed', weight: 10, color: '#b7312b' },
 ];
 
 export function getRatingById(id: Rating['id']): Rating {
@@ -59,22 +64,38 @@ export function getMetaRatingById(id: MetaId): MetaRating {
   return META_RATINGS[id] ?? META_RATINGS.reject;
 }
 
-/* ---------- Meta 个人偏差 ---------- */
+/* ---------- Meta 偏差 ---------- */
 
 /**
- * - normal     : meta 按审稿人均分给结论
- * - asshole    : 傻逼 meta — 高分也拒（reviewer 共识被强行下调一档）
- * - godfather  : 亲爹 meta — 低分也收（强行上调一档）
+ * AC 的最终裁决相对于审稿人共识的偏移：
+ * - normal            : 按审稿人均分给结论
+ * - asshole           : 下调一档（best→accept / accept→reject）
+ * - asshole_extreme   : 从 best 直接降到 reject
+ * - godfather         : 上调一档（reject→accept / accept→best）
+ * - godfather_extreme : 从 reject 直接升到 best
+ * 命名来自社区俗语，含义仅指行为方向，不做评价。
  */
-export type MetaFlavor = 'normal' | 'asshole' | 'godfather';
+export type MetaFlavor =
+  | 'normal'
+  | 'asshole'
+  | 'asshole_extreme'
+  | 'godfather'
+  | 'godfather_extreme';
 
 export interface MetaResult {
   verdict: MetaId;
   flavor: MetaFlavor;
 }
 
-const ASSHOLE_RATE = 0.06; // 高分被傻逼 meta 拒
-const GODFATHER_RATE = 0.06; // 低分被亲爹 meta 收
+/** AC 下调一档 / 上调一档 的基础概率。 */
+const ASSHOLE_RATE = 0.15;
+const GODFATHER_RATE = 0.15;
+/** 在 natural=accept 时把结果升到 best 的条件概率——保持 Best 稀有。 */
+const GODFATHER_PROMOTE_RATE = 0.03;
+
+/** 跨两档的极端偏移，仅在对应 natural 档触发。 */
+const BEST_TO_REJECT_RATE = 0.1; // 在 natural=best 时触发，整体 ~0.01%
+const REJECT_TO_BEST_RATE = 0.01; // 在 natural=reject 时触发，整体 ~0.72%
 
 function naturalVerdict(scores: number[]): MetaId {
   if (scores.length === 0) return 'reject';
@@ -85,25 +106,29 @@ function naturalVerdict(scores: number[]): MetaId {
 }
 
 /**
- * 三档裁决，但 meta 有 ~6%/6% 的几率推翻审稿人共识：
- *   - asshole : best → accept / accept → reject
- *   - godfather : reject → accept / accept → best
+ * AC 最终裁决映射。三档 natural 各自独立抛骰：
+ *   natural=best   : 10% → reject (extreme) / 15% → accept (asshole) / 75% → best
+ *   natural=accept : 15% → reject (asshole)  /  3% → best (godfather)  / 82% → accept
+ *   natural=reject :  1% → best (extreme)    / 15% → accept (godfather)/ 84% → reject
  */
 export function deriveFinalVerdict(scores: number[]): MetaResult {
   const natural = naturalVerdict(scores);
-  const roll = Math.random();
 
-  if (natural === 'best' && roll < ASSHOLE_RATE) {
-    return { verdict: 'accept', flavor: 'asshole' };
+  if (natural === 'best') {
+    const r = Math.random();
+    if (r < BEST_TO_REJECT_RATE) return { verdict: 'reject', flavor: 'asshole_extreme' };
+    if (r < BEST_TO_REJECT_RATE + ASSHOLE_RATE) return { verdict: 'accept', flavor: 'asshole' };
+    return { verdict: 'best', flavor: 'normal' };
   }
-  if (natural === 'accept' && roll < ASSHOLE_RATE) {
-    return { verdict: 'reject', flavor: 'asshole' };
+  if (natural === 'accept') {
+    const r = Math.random();
+    if (r < ASSHOLE_RATE) return { verdict: 'reject', flavor: 'asshole' };
+    if (r < ASSHOLE_RATE + GODFATHER_PROMOTE_RATE) return { verdict: 'best', flavor: 'godfather' };
+    return { verdict: 'accept', flavor: 'normal' };
   }
-  if (natural === 'reject' && roll < GODFATHER_RATE) {
-    return { verdict: 'accept', flavor: 'godfather' };
-  }
-  if (natural === 'accept' && roll < ASSHOLE_RATE + GODFATHER_RATE) {
-    return { verdict: 'best', flavor: 'godfather' };
-  }
-  return { verdict: natural, flavor: 'normal' };
+  // natural === 'reject'
+  const r = Math.random();
+  if (r < REJECT_TO_BEST_RATE) return { verdict: 'best', flavor: 'godfather_extreme' };
+  if (r < REJECT_TO_BEST_RATE + GODFATHER_RATE) return { verdict: 'accept', flavor: 'godfather' };
+  return { verdict: 'reject', flavor: 'normal' };
 }

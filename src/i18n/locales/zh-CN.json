@@ -166,7 +166,7 @@
   "meta": {
     "best": {
       "label": "Best Paper",
-      "tagline": "全场起立，请发表获奖感言"
+      "tagline": "三位评审都打在最高档"
     },
     "accept": {
       "label": "Accept",
@@ -174,17 +174,19 @@
     },
     "reject": {
       "label": "Reject",
-      "tagline": "Reviewer 2 的生日蛋糕"
+      "tagline": "下一轮再投"
     },
     "flavor": {
-      "asshole": "AC 一票否决 · 审稿人共识无效",
-      "godfather": "AC 力排众议 · 关系户保送"
+      "asshole": "AC 亲自压了一档",
+      "asshole_extreme": "AC 一路压到 Reject",
+      "godfather": "AC 亲自抬了一档",
+      "godfather_extreme": "AC 一路抬到 Best Paper"
     }
   },
   "ratings": {
     "best": {
       "label": "Best Paper",
-      "tagline": "全场起立，请发表获奖感言"
+      "tagline": "三位评审都打在最高档"
     },
     "strong_accept": {
       "label": "Strong Accept",
@@ -192,7 +194,7 @@
     },
     "weak_accept": {
       "label": "Weak Accept",
-      "tagline": "能发就行，别挑"
+      "tagline": "刚过门槛"
     },
     "borderline": {
       "label": "Borderline",
@@ -204,7 +206,7 @@
     },
     "strong_reject": {
       "label": "Strong Reject",
-      "tagline": "Reviewer 2 的生日蛋糕"
+      "tagline": "下一轮再投"
     }
   },
   "rarity": {
@@ -214,16 +216,6 @@
     "uncommon": "绝活",
     "common": "NPC",
     "cursed": "拉完了"
-  },
-  "packs": {
-    "cs-ai": {
-      "name": "CS / AI 主包",
-      "description": "人工智能、机器学习、NLP、CV、系统、数据库方向的顶会顶刊。"
-    },
-    "bio-med": {
-      "name": "生物 / 医学 DLC",
-      "description": "Nature、Science、Cell、NEJM、Lancet 等跨学科顶刊。"
-    }
   },
   "panels": {
     "subscribed": "订阅内容包",

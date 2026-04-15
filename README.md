@@ -25,19 +25,19 @@
 
 ## 🎰 How It Works
 
-1. **Reel 1 — Venue**  
+1. **Reel 1 — Venue**
    Spins a venue from the CCF 2026 directory plus community tiers: **god / top / mid / meme**.
 
-2. **Reels 2–4 — Reviewers**  
+2. **Reels 2–4 — Reviewers**
    Three independent reviewers roll in, each with a matched **emoji + comment + rating**.
    - ~12% of reviewers never show up (`REVIEW MISSING`).
    - Submitted scores are averaged to get a "natural" verdict.
 
-3. **Meta-Reviewer Verdict**  
-   The final decision collapses to three outcomes: **Best Paper / Accept / Reject**.  
-   But watch out — the meta-reviewer has a ~12% chance to override the panel out of personal bias.
+3. **Meta-Reviewer Verdict**
+   The final decision collapses to three outcomes: **Best Paper / Accept / Reject**.
+   But watch out — the meta-reviewer has a ~15% chance to override the panel, in either direction.
 
-4. **★ Wish Mode**  
+4. **★ Wish Mode**
    Whisper a wish to the apparatus for a 95% accept rate and top-tier venues only.
 
 ---
@@ -49,7 +49,7 @@
 - **Framer Motion** (physics-based reel scrolling)
 - **Tailwind CSS** (riso-print palette: paper / oxblood / forest / mustard / navy)
 - **i18next** (zh-CN / en)
-- **Web Audio API** (synthesized SFX, zero audio assets)
+- **Web Audio API** + real samples (lever / reel-spin / accept / cheer)
 
 ---
 
@@ -70,24 +70,9 @@ npm run build
 
 ## 🤝 Contributing
 
-We welcome new venue packs and reviewer comments!
+Adding your own field takes **one JSON file** — see [`CONTRIBUTING.md`](CONTRIBUTING.md) for the step-by-step.
 
-### 📦 Add a new venue pack
-
-Edit `src/data/venues.ts`:
-
-- Create a new `VenuePack` object (follow the `CS_AI_PACK` example).
-- Add it to `ALL_PACKS`.
-- Add i18n entries in `src/i18n/locales/zh-CN.json` and `en.json` under `packs.{your-id}.name` and `description`.
-
-### 💬 Add reviewer comments
-
-Edit `src/i18n/locales/zh-CN.json` and `en.json`:
-
-- Find `commentsByRating`.
-- Append new strings to the matching rating pool (`best`, `strong_accept`, `weak_accept`, `borderline`, `weak_reject`, `strong_reject`).
-
-Keep both language files in sync.
+Reviewer comments live in `src/i18n/locales/{zh-CN,en}.json` under `commentsByRating`. Keep both locales in sync and bump `COMMENT_COUNTS` in `src/data/comments.ts` when adding entries.
 
 ---
 
