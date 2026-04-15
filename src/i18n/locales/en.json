@@ -177,10 +177,10 @@
       "tagline": "Reviewer 2's birthday cake."
     },
     "flavor": {
-      "asshole": "AC: one tier down",
-      "asshole_extreme": "AC: Best Paper → Reject",
-      "godfather": "AC: one tier up",
-      "godfather_extreme": "AC: Reject → Best Paper"
+      "asshole": "AC took it down a tier",
+      "asshole_extreme": "AC walked it all the way to Reject",
+      "godfather": "AC bumped it up a tier",
+      "godfather_extreme": "AC walked it all the way to Best Paper"
     }
   },
   "ratings": {

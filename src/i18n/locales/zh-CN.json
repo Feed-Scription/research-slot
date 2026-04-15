@@ -177,10 +177,10 @@
       "tagline": "Reviewer 2 的生日蛋糕"
     },
     "flavor": {
-      "asshole": "AC 下调一档",
-      "asshole_extreme": "AC 裁决：Best Paper → Reject",
-      "godfather": "AC 上调一档",
-      "godfather_extreme": "AC 裁决：Reject → Best Paper"
+      "asshole": "AC 亲自压了一档",
+      "asshole_extreme": "AC 一路压到 Reject",
+      "godfather": "AC 亲自抬了一档",
+      "godfather_extreme": "AC 一路抬到 Best Paper"
     }
   },
   "ratings": {
