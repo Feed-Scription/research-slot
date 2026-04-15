@@ -172,6 +172,10 @@
     "reject": {
       "label": "Reject",
       "tagline": "Reviewer 2's birthday cake."
+    },
+    "flavor": {
+      "asshole": "AC overruled the panel",
+      "godfather": "AC saved the paper (knows the authors)"
     }
   },
   "ratings": {

@@ -10,6 +10,7 @@ import {
   RATINGS,
   type Rating,
   type MetaId,
+  type MetaFlavor,
   deriveFinalVerdict,
   EMOJIS_BY_RATING,
 } from '../data/ratings';
@@ -31,6 +32,8 @@ export interface SpinResult {
   reviewers: [Reviewer, Reviewer, Reviewer];
   /** Meta-reviewer 的三档裁决：'best' | 'accept' | 'reject' */
   finalVerdict: MetaId;
+  /** meta 个人偏差：normal / 傻逼 / 亲爹 */
+  metaFlavor: MetaFlavor;
 }
 
 type Phase = 'idle' | 'spinning' | 'revealed';
@@ -121,16 +124,17 @@ export const useGameStore = create<GameState>()(
           Reviewer,
         ];
         const submitted = reviewers.filter((r) => !r.missing);
-        // 全员不交 → AC 单独决定，默认 reject；否则按交了的人均分映射到 3 档
-        const finalVerdict = deriveFinalVerdict(
+        // 按交了的人均分先算自然结论，再让 meta 抽是否发疯
+        const meta = deriveFinalVerdict(
           submitted.map((r) => RATINGS.find((x) => x.id === r.ratingId)?.score ?? 5)
-        ).id;
+        );
         const result: SpinResult = {
           id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
           timestamp: Date.now(),
           venue: pick(venuePool),
           reviewers,
-          finalVerdict,
+          finalVerdict: meta.verdict,
+          metaFlavor: meta.flavor,
         };
         set({ phase: 'spinning', pending: result, result: null });
         return result;
@@ -162,7 +166,7 @@ export const useGameStore = create<GameState>()(
       toggleWishMode: () => set({ wishMode: !get().wishMode }),
     }),
     {
-      name: 'research-slot-v6',
+      name: 'research-slot-v7',
       partialize: (s) => ({
         history: s.history,
         totalSpins: s.totalSpins,

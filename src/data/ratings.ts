@@ -59,15 +59,51 @@ export function getMetaRatingById(id: MetaId): MetaRating {
   return META_RATINGS[id] ?? META_RATINGS.reject;
 }
 
+/* ---------- Meta 个人偏差 ---------- */
+
 /**
- * 三档裁决：avg ≥ 9 → Best Paper；6 ≤ avg < 9 → Accept；avg < 6 → Reject。
- * 单条 Best Paper（10）自动收为 Best；3 个 Strong Accept (8) 平均 8 → Accept；
- * 任意 borderline-下 → Reject（meta 不再有"边缘"出口）。
+ * - normal     : meta 按审稿人均分给结论
+ * - asshole    : 傻逼 meta — 高分也拒（reviewer 共识被强行下调一档）
+ * - godfather  : 亲爹 meta — 低分也收（强行上调一档）
  */
-export function deriveFinalVerdict(scores: number[]): MetaRating {
-  if (scores.length === 0) return META_RATINGS.reject;
+export type MetaFlavor = 'normal' | 'asshole' | 'godfather';
+
+export interface MetaResult {
+  verdict: MetaId;
+  flavor: MetaFlavor;
+}
+
+const ASSHOLE_RATE = 0.06; // 高分被傻逼 meta 拒
+const GODFATHER_RATE = 0.06; // 低分被亲爹 meta 收
+
+function naturalVerdict(scores: number[]): MetaId {
+  if (scores.length === 0) return 'reject';
   const avg = scores.reduce((s, x) => s + x, 0) / scores.length;
-  if (avg >= 9) return META_RATINGS.best;
-  if (avg >= 6) return META_RATINGS.accept;
-  return META_RATINGS.reject;
+  if (avg >= 9) return 'best';
+  if (avg >= 6) return 'accept';
+  return 'reject';
+}
+
+/**
+ * 三档裁决，但 meta 有 ~6%/6% 的几率推翻审稿人共识：
+ *   - asshole : best → accept / accept → reject
+ *   - godfather : reject → accept / accept → best
+ */
+export function deriveFinalVerdict(scores: number[]): MetaResult {
+  const natural = naturalVerdict(scores);
+  const roll = Math.random();
+
+  if (natural === 'best' && roll < ASSHOLE_RATE) {
+    return { verdict: 'accept', flavor: 'asshole' };
+  }
+  if (natural === 'accept' && roll < ASSHOLE_RATE) {
+    return { verdict: 'reject', flavor: 'asshole' };
+  }
+  if (natural === 'reject' && roll < GODFATHER_RATE) {
+    return { verdict: 'accept', flavor: 'godfather' };
+  }
+  if (natural === 'accept' && roll < ASSHOLE_RATE + GODFATHER_RATE) {
+    return { verdict: 'best', flavor: 'godfather' };
+  }
+  return { verdict: natural, flavor: 'normal' };
 }

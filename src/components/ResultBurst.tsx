@@ -165,6 +165,14 @@ export function ResultBurst({ result, onClose }: ResultBurstProps) {
             </div>
 
             <div className="text-center mt-2">
+              {result.metaFlavor !== 'normal' && (
+                <div
+                  className="mb-1 font-mono text-[10px] tracking-[0.28em] uppercase"
+                  style={{ color: result.metaFlavor === 'godfather' ? 'var(--forest)' : 'var(--oxblood)' }}
+                >
+                  ▶ {t(`meta.flavor.${result.metaFlavor}`)}
+                </div>
+              )}
               <div className="font-italic-display text-xl italic text-ink">
                 {result.reviewers.every((r) => r.missing)
                   ? t('reels.allMissingTagline')

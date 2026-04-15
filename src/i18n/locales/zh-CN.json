@@ -172,6 +172,10 @@
     "reject": {
       "label": "Reject",
       "tagline": "Reviewer 2 的生日蛋糕"
+    },
+    "flavor": {
+      "asshole": "AC 一票否决 · 审稿人共识无效",
+      "godfather": "AC 力排众议 · 关系户保送"
     }
   },
   "ratings": {
