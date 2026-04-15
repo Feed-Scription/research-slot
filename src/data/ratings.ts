@@ -12,13 +12,18 @@ export interface Rating {
   color: string;
 }
 
+/**
+ * 单审稿人评级权重（普通模式）。
+ * 期望值 ≈ 5.26，三审平均 ≥6 的概率 ~23%，折算到 meta 三档裁决时
+ * 进一步受 asshole/godfather 6% 概率调制，普通玩家实测 accept ≈ 25%。
+ */
 export const RATINGS: Rating[] = [
-  { id: 'best', score: 10, rarity: 'legendary', weight: 1, color: '#d9a441' },
-  { id: 'strong_accept', score: 8, rarity: 'epic', weight: 5, color: '#2e4a3e' },
-  { id: 'weak_accept', score: 6, rarity: 'rare', weight: 20, color: '#24406b' },
-  { id: 'borderline', score: 5, rarity: 'common', weight: 34, color: '#6a5f52' },
-  { id: 'weak_reject', score: 4, rarity: 'uncommon', weight: 25, color: '#8a5a2a' },
-  { id: 'strong_reject', score: 2, rarity: 'cursed', weight: 15, color: '#b7312b' },
+  { id: 'best', score: 10, rarity: 'legendary', weight: 2, color: '#d9a441' },
+  { id: 'strong_accept', score: 8, rarity: 'epic', weight: 12, color: '#2e4a3e' },
+  { id: 'weak_accept', score: 6, rarity: 'rare', weight: 30, color: '#24406b' },
+  { id: 'borderline', score: 5, rarity: 'common', weight: 26, color: '#6a5f52' },
+  { id: 'weak_reject', score: 4, rarity: 'uncommon', weight: 20, color: '#8a5a2a' },
+  { id: 'strong_reject', score: 2, rarity: 'cursed', weight: 10, color: '#b7312b' },
 ];
 
 export function getRatingById(id: Rating['id']): Rating {
