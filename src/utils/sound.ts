@@ -87,8 +87,10 @@ function playSample(url: string, volume = 0.6, opts?: { loop?: boolean }): Sampl
 export function prewarmSfx() {
   void loadBuffer(asset('sounds/lever-pull.mp3'));
   void loadBuffer(asset('sounds/reel-spin.mp3'));
-  void loadBuffer(asset('sounds/accept.mp3'));
+  void loadBuffer(asset('sounds/stamp.mp3'));
+  void loadBuffer(asset('sounds/happy.mp3'));
   void loadBuffer(asset('sounds/crowd-cheer.mp3'));
+  void loadBuffer(asset('sounds/sad.mp3'));
 }
 
 type ToneOpts = {
@@ -123,10 +125,13 @@ function tone({ freq, duration = 0.12, type = 'square', volume = 0.15, attack = 
 export const sfx = {
   leverPull: () => void playSample(asset('sounds/lever-pull.mp3'), 0.6),
   reelSpin: (): SampleHandle => playSample(asset('sounds/reel-spin.mp3'), 0.45, { loop: false }),
-  winAccept: () => void playSample(asset('sounds/accept.mp3'), 0.7),
-  /** Best Paper：happy + 全场欢呼叠加。 */
+  winAccept: () => {
+    void playSample(asset('sounds/stamp.mp3'), 0.7);
+    void playSample(asset('sounds/happy.mp3'), 0.55);
+  },
+  /** Best Paper：stamp + 全场欢呼叠加。 */
   winBestPaper: () => {
-    void playSample(asset('sounds/accept.mp3'), 0.7);
+    void playSample(asset('sounds/stamp.mp3'), 0.7);
     void playSample(asset('sounds/crowd-cheer.mp3'), 0.55);
   },
   reelTick: () => tone({ freq: 520, duration: 0.04, type: 'square', volume: 0.08 }),
@@ -149,9 +154,8 @@ export const sfx = {
   winCommon: () => tone({ freq: 440, duration: 0.1, type: 'triangle', volume: 0.12 }),
   lose: () => tone({ freq: 180, slideTo: 80, duration: 0.5, type: 'sawtooth', volume: 0.18 }),
   curse: () => {
-    [200, 150, 90].forEach((f, i) =>
-      setTimeout(() => tone({ freq: f, duration: 0.18, type: 'sawtooth', volume: 0.16 }), i * 100)
-    );
+    void playSample(asset('sounds/stamp.mp3'), 0.7);
+    void playSample(asset('sounds/sad.mp3'), 0.7);
   },
 };
 
