@@ -12,6 +12,45 @@ function getCtx(): AudioContext | null {
   return ctx;
 }
 
+/* ---------- MP3 一次性加载 + 缓存 ---------- */
+
+const bufferCache = new Map<string, Promise<AudioBuffer | null>>();
+
+function loadBuffer(url: string): Promise<AudioBuffer | null> {
+  if (bufferCache.has(url)) return bufferCache.get(url)!;
+  const c = getCtx();
+  if (!c) {
+    const fail = Promise.resolve<AudioBuffer | null>(null);
+    bufferCache.set(url, fail);
+    return fail;
+  }
+  const p = fetch(url)
+    .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject(new Error('fetch failed'))))
+    .then((buf) => c.decodeAudioData(buf))
+    .catch(() => null);
+  bufferCache.set(url, p);
+  return p;
+}
+
+async function playSample(url: string, volume = 0.6) {
+  const c = getCtx();
+  if (!c || muted) return;
+  const buf = await loadBuffer(url);
+  if (!buf) return;
+  const src = c.createBufferSource();
+  src.buffer = buf;
+  const gain = c.createGain();
+  gain.gain.value = volume;
+  src.connect(gain);
+  gain.connect(c.destination);
+  src.start();
+}
+
+/** 预取拉杆音效，避免第一次点击时延迟。在用户首次交互后调用。 */
+export function prewarmSfx() {
+  void loadBuffer('/sounds/lever-pull.mp3');
+}
+
 type ToneOpts = {
   freq: number;
   duration?: number;
@@ -42,7 +81,7 @@ function tone({ freq, duration = 0.12, type = 'square', volume = 0.15, attack = 
 }
 
 export const sfx = {
-  leverPull: () => tone({ freq: 220, slideTo: 80, duration: 0.28, type: 'sawtooth', volume: 0.18 }),
+  leverPull: () => void playSample('/sounds/lever-pull.mp3', 0.6),
   reelTick: () => tone({ freq: 520, duration: 0.04, type: 'square', volume: 0.08 }),
   reelStop: () => tone({ freq: 180, duration: 0.08, type: 'square', volume: 0.12 }),
   winLegendary: () => {
