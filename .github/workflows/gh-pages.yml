@@ -28,9 +28,6 @@ jobs:
       # Vercel 那边用默认 "/"，两者互不影响。
       - run: npx vite build --base=/research-slot/
       - uses: actions/configure-pages@v5
-        with:
-          # 第一次跑时自动在仓库开启 Pages，省掉手动进 Settings → Pages 配置
-          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
