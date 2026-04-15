@@ -112,7 +112,7 @@ export default function App() {
                 </div>
                 <div className="font-display font-black italic text-4xl leading-none">XII</div>
                 <div className="font-mono text-[9px] tracking-[0.3em] text-ink-soft uppercase mt-1">
-                  №&nbsp;1974
+                  №&nbsp;1996
                 </div>
               </div>
               <div className="mt-2 font-italic-display italic text-sm text-ink-muted">

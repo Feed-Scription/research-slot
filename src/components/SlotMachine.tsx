@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../store/gameStore';
 import { getActiveVenues } from '../data/venues';
@@ -28,6 +28,7 @@ export function SlotMachine({ onRevealResult }: Props) {
   const wishMode = useGameStore((s) => s.wishMode);
 
   const [pulled, setPulled] = useState(false);
+  const [showNoPackHint, setShowNoPackHint] = useState(false);
   const stopCountRef = useRef(0);
 
   const spinning = phase === 'spinning';
@@ -38,6 +39,11 @@ export function SlotMachine({ onRevealResult }: Props) {
 
   const handlePull = () => {
     if (spinning) return;
+    if (venuePool.length === 0) {
+      setShowNoPackHint(true);
+      window.setTimeout(() => setShowNoPackHint(false), 3200);
+      return;
+    }
     stopCountRef.current = 0;
     setPulled(true);
     sfx.leverPull();
@@ -157,7 +163,21 @@ export function SlotMachine({ onRevealResult }: Props) {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.55 }}
+          className="relative"
         >
+          <AnimatePresence>
+            {showNoPackHint && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] text-oxblood bg-paper border-2 border-oxblood px-3 py-1 shadow-[4px_4px_0_var(--oxblood)] z-10"
+              >
+                {t('lever.noPackHint')}
+              </motion.div>
+            )}
+          </AnimatePresence>
           <Lever onPull={handlePull} disabled={spinning} pulled={pulled} />
         </motion.div>
       </div>

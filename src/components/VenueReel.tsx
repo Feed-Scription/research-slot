@@ -35,11 +35,12 @@ export function VenueReel({ pool, finalItem, spinning, spinDurationMs, onStop }:
 
   // filler 列表在本次 spin 期间稳定
   const fillers = useMemo(() => {
+    if (pool.length === 0) return [];
     return Array.from({ length: FILLER }, () => pick(pool));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finalItem?.name]);
+  }, [finalItem?.name, pool.length]);
 
-  const strip: Venue[] = [...fillers, finalItem ?? fillers[0]];
+  const strip: Venue[] = pool.length > 0 ? [...fillers, finalItem ?? fillers[0]] : [];
 
   useEffect(() => {
     if (!spinning) return;
@@ -65,39 +66,56 @@ export function VenueReel({ pool, finalItem, spinning, spinDurationMs, onStop }:
       <span className="specimen-sn">{t('reels.venueSerial')}</span>
       <div className="specimen-inner relative overflow-hidden">
         <motion.div className="absolute inset-x-0 top-0" style={{ y }}>
-          {strip.map((v, i) => (
+          {pool.length === 0 ? (
             <div
-              key={i}
               style={{ height: ITEM_H }}
-              className="flex flex-col items-center justify-center gap-1 px-3"
+              className="flex flex-col items-center justify-center gap-2 px-3"
             >
-              <div className="font-mono text-[8.5px] tracking-[0.3em] uppercase text-ink-muted">
-                {t('reels.targeting')}
-              </div>
-              <div
-                className="font-display font-black italic leading-[0.9] text-center"
-                style={{
-                  fontSize: `clamp(22px, ${Math.max(22, 40 - v.name.length * 1.1)}px, 46px)`,
-                  fontVariationSettings: '"opsz" 144, "SOFT" 30',
-                  color: 'var(--ink)',
-                }}
+              <div className="text-3xl md:text-4xl leading-none opacity-30">📦</div>
+              <div className="font-italic-display italic text-[13px] md:text-[15px] text-oxblood border-[3px] border-oxblood px-3 py-0.5 -rotate-6"
+                style={{ boxShadow: 'inset 0 0 0 1.5px var(--oxblood)' }}
               >
-                {v.name}
+                {t('reels.noVenueTitle')}
               </div>
-              <div
-                className="font-mono text-[9px] tracking-[0.26em] uppercase"
-                style={{ color: TIER_COLOR[v.tier] }}
-              >
-                — {t(`reels.tierLabel.${v.tier}`)} —
-              </div>
-              <div
-                className="font-italic-display italic text-[11px]"
-                style={{ color: TIER_COLOR[v.tier], opacity: 0.85 }}
-              >
-                {t(`reels.tierFlavor.${v.tier}`)}
+              <div className="font-italic-display italic text-[10px] md:text-[11px] text-ink-muted text-center max-w-[90%]">
+                {t('reels.noVenueNote')}
               </div>
             </div>
-          ))}
+          ) : (
+            strip.map((v, i) => (
+              <div
+                key={i}
+                style={{ height: ITEM_H }}
+                className="flex flex-col items-center justify-center gap-1 px-3"
+              >
+                <div className="font-mono text-[8.5px] tracking-[0.3em] uppercase text-ink-muted">
+                  {t('reels.targeting')}
+                </div>
+                <div
+                  className="font-display font-black italic leading-[0.9] text-center"
+                  style={{
+                    fontSize: `clamp(22px, ${Math.max(22, 40 - v.name.length * 1.1)}px, 46px)`,
+                    fontVariationSettings: '"opsz" 144, "SOFT" 30',
+                    color: 'var(--ink)',
+                  }}
+                >
+                  {v.name}
+                </div>
+                <div
+                  className="font-mono text-[9px] tracking-[0.26em] uppercase"
+                  style={{ color: TIER_COLOR[v.tier] }}
+                >
+                  — {t(`reels.tierLabel.${v.tier}`)} —
+                </div>
+                <div
+                  className="font-italic-display italic text-[11px]"
+                  style={{ color: TIER_COLOR[v.tier], opacity: 0.85 }}
+                >
+                  {t(`reels.tierFlavor.${v.tier}`)}
+                </div>
+              </div>
+            ))
+          )}
         </motion.div>
       </div>
     </div>

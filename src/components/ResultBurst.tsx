@@ -183,7 +183,15 @@ export function ResultBurst({ result, onClose }: ResultBurstProps) {
               </div>
             </div>
 
-            <div className="absolute top-2 right-2 font-mono text-[9px] text-ink-soft tracking-widest">
+            <button
+              type="button"
+              onClick={onClose}
+              className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center border-2 border-ink text-ink hover:bg-ink hover:text-paper transition-colors z-10"
+              aria-label={t('burst.close')}
+            >
+              <span className="text-lg leading-none">×</span>
+            </button>
+            <div className="absolute top-3 right-12 font-mono text-[9px] text-ink-soft tracking-widest">
               № {String(result.timestamp).slice(-6)}
             </div>
           </motion.div>

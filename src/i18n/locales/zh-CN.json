@@ -18,15 +18,16 @@
     "title": "Peer Review Apparatus",
     "sub": "§ 一台加速学术命运的学术装置 §",
     "certified": "CERTIFIED",
-    "issn": "ISSN 19—74"
+    "issn": "ISSN 96-314"
   },
-  "form7b": "Form 7-B · App. № 1974",
+  "form7b": "Form 3-14 · App. № 1996",
   "lever": {
     "figCaption": "FIG. IV",
     "figSub": "initiator",
     "aria": "拉下手柄 — PRIMARY INITIATOR",
     "pullToEngage": "↓ 拉下启动",
-    "inOperation": "↻ 运行中"
+    "inOperation": "↻ 运行中",
+    "noPackHint": "请至少订阅一个内容包。当前暂不支持无包模式，欢迎贡献其他方向的论文和梗文字！"
   },
   "reels": {
     "venue": "VENUE",
@@ -48,7 +49,9 @@
     "reviewMissing": "REVIEW MISSING",
     "reviewMissingShort": "OVERDUE",
     "reviewMissingNote": "审稿人逾期未提交",
-    "allMissingTagline": "三位审稿人都没出现，AC 自己拿主意"
+    "allMissingTagline": "三位审稿人都没出现，AC 自己拿主意",
+    "noVenueTitle": "无内容包",
+    "noVenueNote": "请先在右侧订阅至少一个期刊/会议包"
   },
   "wish": {
     "off": "★ 许愿",
@@ -242,9 +245,10 @@
     "bestPaper": "最佳论文"
   },
   "burst": {
-    "certificateOf": "同行评审认证书 · Form 7-B",
+    "certificateOf": "同行评审认证书 · Form 3-14",
     "decision": "最终裁决",
     "dismiss": "点击空白处退场 · tap outside to dismiss",
+    "close": "关闭",
     "certified": "· {{rarity}} · certified ·"
   },
   "buttons": {
@@ -265,7 +269,7 @@
     "friendsPrefix": "同道中人 →",
     "friendsLabel": "我的论文会被录用吗？"
   },
-  "patent": "Patent pending — 本装置包含四扇独立标本窗口、一枚（1）铜质启动器，以及一套用于预测编辑决策的三方 meta 仲裁机构，依据 § 6-B 法令备案。",
+  "patent": "REVIEWING — 本装置包含四扇独立标本窗口、一枚（1）铜质启动器，以及一套用于预测编辑决策的三方仲裁机构，依据 § 3-14 法令备案。",
   "lang": {
     "zh": "中",
     "en": "EN"

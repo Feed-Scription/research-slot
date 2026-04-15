@@ -37,11 +37,6 @@ export function Lever({ onPull, disabled, pulled }: LeverProps) {
           </radialGradient>
         </defs>
 
-        <rect x={CX - 4} y={70} width={8} height={220} fill="#f1ead8" stroke="#1a1613" strokeWidth="1.8" />
-        <line x1={CX - 1} y1={70} x2={CX - 1} y2={290} stroke="#1a1613" strokeWidth="0.6" />
-        <circle cx={CX} cy={290} r="7" fill="#f1ead8" stroke="#1a1613" strokeWidth="1.8" />
-        <circle cx={CX} cy={290} r="2" fill="#1a1613" />
-
         <rect x={CX - 52} y={290} width={104} height={36} fill="#1a1613" />
         <rect x={CX - 52} y={290} width={104} height={36} fill="none" stroke="#1a1613" strokeWidth="2" />
         {[-38, -16, 16, 38].map((dx) => (
@@ -62,6 +57,30 @@ export function Lever({ onPull, disabled, pulled }: LeverProps) {
           />
         ))}
 
+        <motion.rect
+          x={CX - 4}
+          width={8}
+          fill="#f1ead8"
+          stroke="#1a1613"
+          strokeWidth="1.8"
+          initial={{ y: 70, height: 220 }}
+          animate={{ y: pulled ? 280 : 70, height: pulled ? 10 : 220 }}
+          transition={{ type: 'spring', stiffness: 220, damping: 14 }}
+        />
+        <motion.line
+          x1={CX - 1}
+          x2={CX - 1}
+          y2={290}
+          stroke="#1a1613"
+          strokeWidth="0.6"
+          initial={{ y1: 70 }}
+          animate={{ y1: pulled ? 280 : 70 }}
+          transition={{ type: 'spring', stiffness: 220, damping: 14 }}
+        />
+
+        <circle cx={CX} cy={290} r="7" fill="#f1ead8" stroke="#1a1613" strokeWidth="1.8" />
+        <circle cx={CX} cy={290} r="2" fill="#1a1613" />
+
         <motion.g
           animate={{ y: pulled ? 210 : 0, rotate: pulled ? 45 : 0 }}
           transition={{ type: 'spring', stiffness: 220, damping: 14 }}
@@ -78,7 +97,7 @@ export function Lever({ onPull, disabled, pulled }: LeverProps) {
             fill="#1a1613"
             fontWeight="700"
           >
-            № 1974
+            № 1996
           </text>
         </motion.g>
       </svg>
