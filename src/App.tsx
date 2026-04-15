@@ -164,6 +164,17 @@ export default function App() {
             {t('footer.moreLabel')}
           </a>
         </div>
+        <div className="mt-1 font-mono text-[10px] tracking-[0.18em] text-ink-muted">
+          {t('footer.friendsPrefix')}{' '}
+          <a
+            href="https://spico197.github.io/accept/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-ink-soft underline-offset-2 hover:text-oxblood hover:decoration-oxblood transition-colors"
+          >
+            {t('footer.friendsLabel')}
+          </a>
+        </div>
       </footer>
 
       <ResultBurst

@@ -261,7 +261,9 @@
     "colophon": "Res. Slot · 以单色油印于循环语境之上 ·",
     "colophonSub": "理性投稿",
     "morePrefix": "更多有趣的内容 →",
-    "moreLabel": "Feed Scription"
+    "moreLabel": "Feed Scription",
+    "friendsPrefix": "同道中人 →",
+    "friendsLabel": "我的论文会被录用吗？"
   },
   "patent": "Patent pending — 本装置包含四扇独立标本窗口、一枚（1）铜质启动器，以及一套用于预测编辑决策的三方 meta 仲裁机构，依据 § 6-B 法令备案。",
   "lang": {
