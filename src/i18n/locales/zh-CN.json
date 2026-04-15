@@ -9,8 +9,7 @@
     "titleB": "老虎机",
     "descMobile": "拉一下，让三位匿名审稿人决定你论文的归宿。",
     "descDesktop": "一台铜球钢杆的同行评审彩票装置。拉一下，让三位匿名审稿人决定你论文的归宿。",
-    "volume": "VOLUME",
-    "handSet": "— 米色纸本手工排版 —"
+    "volume": "VOLUME"
   },
   "masthead": {
     "metaShort": "VOL. XII · MMXXVI",
@@ -254,7 +253,7 @@
   },
   "footer": {
     "disclaimer": "本装置经虚拟仲裁委员会备案，结果仅供娱乐；真实投稿请以 OpenReview 为准。",
-    "colophon": "Res. Slot · 以单色油印于循环语境之上 ·",
+    "colophon": "Res. Slot ·",
     "colophonSub": "理性投稿",
     "morePrefix": "更多有趣的内容 →",
     "moreLabel": "Feed Scription",

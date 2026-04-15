@@ -105,28 +105,38 @@ function naturalVerdict(scores: number[]): MetaId {
   return 'reject';
 }
 
+export interface DeriveOpts {
+  /** 屏蔽所有 asshole / asshole_extreme 分支（许愿模式下为 true）。 */
+  suppressAsshole?: boolean;
+}
+
 /**
- * AC 最终裁决映射。三档 natural 各自独立抛骰：
- *   natural=best   : 10% → reject (extreme) / 15% → accept (asshole) / 75% → best
- *   natural=accept : 15% → reject (asshole)  /  3% → best (godfather)  / 82% → accept
- *   natural=reject :  1% → best (extreme)    / 15% → accept (godfather)/ 84% → reject
+ * AC 最终裁决映射。三档 natural 各自独立抛骰。
+ * suppressAsshole=true 时，所有会把结果下调的分支失效，godfather 路径保留。
  */
-export function deriveFinalVerdict(scores: number[]): MetaResult {
+export function deriveFinalVerdict(scores: number[], opts: DeriveOpts = {}): MetaResult {
   const natural = naturalVerdict(scores);
+  const suppress = !!opts.suppressAsshole;
 
   if (natural === 'best') {
-    const r = Math.random();
-    if (r < BEST_TO_REJECT_RATE) return { verdict: 'reject', flavor: 'asshole_extreme' };
-    if (r < BEST_TO_REJECT_RATE + ASSHOLE_RATE) return { verdict: 'accept', flavor: 'asshole' };
+    if (!suppress) {
+      const r = Math.random();
+      if (r < BEST_TO_REJECT_RATE) return { verdict: 'reject', flavor: 'asshole_extreme' };
+      if (r < BEST_TO_REJECT_RATE + ASSHOLE_RATE) return { verdict: 'accept', flavor: 'asshole' };
+    }
     return { verdict: 'best', flavor: 'normal' };
   }
   if (natural === 'accept') {
     const r = Math.random();
-    if (r < ASSHOLE_RATE) return { verdict: 'reject', flavor: 'asshole' };
-    if (r < ASSHOLE_RATE + GODFATHER_PROMOTE_RATE) return { verdict: 'best', flavor: 'godfather' };
+    if (!suppress && r < ASSHOLE_RATE) return { verdict: 'reject', flavor: 'asshole' };
+    // godfather 升级：suppress 模式下直接从 0 开始判，概率不变
+    const promoteLo = suppress ? 0 : ASSHOLE_RATE;
+    if (r >= promoteLo && r < promoteLo + GODFATHER_PROMOTE_RATE) {
+      return { verdict: 'best', flavor: 'godfather' };
+    }
     return { verdict: 'accept', flavor: 'normal' };
   }
-  // natural === 'reject'
+  // natural === 'reject' —— godfather 分支不受 suppress 影响
   const r = Math.random();
   if (r < REJECT_TO_BEST_RATE) return { verdict: 'best', flavor: 'godfather_extreme' };
   if (r < REJECT_TO_BEST_RATE + GODFATHER_RATE) return { verdict: 'accept', flavor: 'godfather' };

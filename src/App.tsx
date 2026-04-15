@@ -134,9 +134,6 @@ export default function App() {
                   №&nbsp;1996
                 </div>
               </div>
-              <div className="mt-2 font-italic-display italic text-sm text-ink-muted">
-                {t('hero.handSet')}
-              </div>
             </div>
           </motion.div>
           <div className="hidden md:block mt-6 border-t-2 border-b-2 border-double border-ink h-1.5" />

@@ -124,9 +124,11 @@ export const useGameStore = create<GameState>()(
           Reviewer,
         ];
         const submitted = reviewers.filter((r) => !r.missing);
-        // 按交了的人均分先算自然结论，再让 meta 抽是否发疯
+        // 按交了的人均分先算自然结论，再让 meta 抽偏差。
+        // 许愿模式下屏蔽 asshole 分支——既然是许愿，就别让 AC 反手给一刀。
         const meta = deriveFinalVerdict(
-          submitted.map((r) => RATINGS.find((x) => x.id === r.ratingId)?.score ?? 5)
+          submitted.map((r) => RATINGS.find((x) => x.id === r.ratingId)?.score ?? 5),
+          { suppressAsshole: wish }
         );
         const result: SpinResult = {
           id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,

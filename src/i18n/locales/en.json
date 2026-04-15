@@ -9,8 +9,7 @@
     "titleB": "Slot",
     "descMobile": "Pull once — three anonymous reviewers decide your paper's fate.",
     "descDesktop": "A brass-and-steel apparatus for peer-review lottery. Pull once, and let three anonymous reviewers decide your paper's fate.",
-    "volume": "VOLUME",
-    "handSet": "— hand-set on cream stock —"
+    "volume": "VOLUME"
   },
   "masthead": {
     "metaShort": "VOL. XII · MMXXVI",
@@ -254,7 +253,7 @@
   },
   "footer": {
     "disclaimer": "Registered with the fictitious arbitration board. Results for entertainment only — real submissions go through OpenReview.",
-    "colophon": "Res. Slot · printed in 1 color on recycled context ·",
+    "colophon": "Res. Slot ·",
     "colophonSub": "submit responsibly",
     "morePrefix": "more curious things →",
     "moreLabel": "Feed Scription",
