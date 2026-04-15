@@ -1,0 +1,251 @@
+{
+  "brand": "Research Slot",
+  "brandShort": "Res.Slot",
+  "brandTagline": "Peer Review Lottery · Est. MMXXVI",
+  "edition": "Apr 15 · Tuesday edition",
+  "hero": {
+    "chapter": "Chapter I · The Ceremony of Submission",
+    "titleA": "Research",
+    "titleB": "Slot",
+    "descMobile": "Pull once — three anonymous reviewers decide your paper's fate.",
+    "descDesktop": "A brass-and-steel apparatus for peer-review lottery. Pull once, and let three anonymous reviewers decide your paper's fate.",
+    "volume": "VOLUME",
+    "handSet": "— hand-set on cream stock —"
+  },
+  "masthead": {
+    "metaShort": "VOL. XII · MMXXVI",
+    "metaFull": "The Quarterly Review · Vol. XII · MMXXVI",
+    "title": "Peer Review Apparatus",
+    "sub": "§ an academic contraption for the acceleration of scholarly fate §",
+    "certified": "CERTIFIED",
+    "issn": "ISSN 19—74"
+  },
+  "form7b": "Form 7-B · App. № 1974",
+  "lever": {
+    "figCaption": "FIG. IV",
+    "figSub": "initiator",
+    "aria": "PULL — PRIMARY INITIATOR",
+    "pullToEngage": "↓ pull to engage",
+    "inOperation": "↻ in operation"
+  },
+  "reels": {
+    "venue": "VENUE",
+    "venueSerial": "№ 001",
+    "targeting": "· targeting ·",
+    "reviewer": "REVIEWER · {{n}}",
+    "tierFlavor": {
+      "god": "★ GOAT ★",
+      "top": "— Top-Tier —",
+      "mid": "— NPC —",
+      "meme": "(Cooked)"
+    },
+    "tierLabel": {
+      "god": "CLASS S",
+      "top": "CLASS A",
+      "mid": "CLASS B",
+      "meme": "CLASS ?"
+    },
+    "reviewMissing": "REVIEW MISSING",
+    "reviewMissingShort": "OVERDUE",
+    "reviewMissingNote": "reviewer never submitted",
+    "allMissingTagline": "no reviewers showed up — AC made the call alone"
+  },
+  "wish": {
+    "off": "★ wish",
+    "on": "★ blessed",
+    "stamp": "BLESSED",
+    "tooltip": "Wish mode: 95% accept + top-tier venues only"
+  },
+  "commentsByRating": {
+    "best": [
+      "Already a classic.",
+      "Field-defining contribution.",
+      "Best Paper. Period.",
+      "Cannot find any flaws.",
+      "Author's name is enough.",
+      "Test-of-Time material.",
+      "GOATed.",
+      "Strong Accept. No comments.",
+      "Bid for this. Accept.",
+      "No revisions needed.",
+      "Best paper candidate.",
+      "Untouchable.",
+      "Beats scaling laws."
+    ],
+    "strong_accept": [
+      "You cited me. Accept.",
+      "Boss's student. Accept.",
+      "Numbers don't lie.",
+      "Big lab. Accept.",
+      "COI noted. Still recommend.",
+      "👍",
+      "No notes.",
+      "Brand-name authors.",
+      "Move to accept.",
+      "Reproducible. Accept.",
+      "Senior author trusted.",
+      "Cooked (positive)."
+    ],
+    "weak_accept": [
+      "LGTM.",
+      "Looks fine.",
+      "Marginal accept.",
+      "Acceptable for this venue.",
+      "Mid but pass.",
+      "Borderline. Accept.",
+      "Fine.",
+      "Nothing to add.",
+      "OK for this cycle."
+    ],
+    "borderline": [
+      "I have 40 questions.",
+      "Section 3 unclear.",
+      "Borderline novelty.",
+      "Title oversells.",
+      "Unclear contribution.",
+      "Notation overwhelming.",
+      "Confidence: 2 of 5.",
+      "Many minor issues.",
+      "Strengths and weaknesses balance.",
+      "Need clarification urgently.",
+      "Defer to meta-reviewer.",
+      "Reviewer 2 may disagree.",
+      "Mid."
+    ],
+    "weak_reject": [
+      "Who is Adam?",
+      "Translate into English.",
+      "Have you tried Mamba?",
+      "Forgot to cite me.",
+      "Where is GPT-5?",
+      "DeepSeek does this cheaper.",
+      "Llama 4 already does this.",
+      "Where are the ablations?",
+      "Where is the theory?",
+      "Where is the novelty?",
+      "Wrong baselines.",
+      "Wrong venue.",
+      "Use Cursor next time.",
+      "L baseline choice.",
+      "Missing my prior work.",
+      "Need Llama-3-70B results.",
+      "Where are 405B numbers?",
+      "Insufficient model scale.",
+      "Need GPT-4 baseline."
+    ],
+    "strong_reject": [
+      "Burn this manuscript.",
+      "Block author's email.",
+      "ChatGPT can do this.",
+      "Claude writes better.",
+      "Vibecoded paper.",
+      "Change careers, please.",
+      "Obvious incremental work.",
+      "Just attention plus MLP.",
+      "Done in 2019.",
+      "Ban these five authors.",
+      "Suspected misconduct.",
+      "Ruined my weekend.",
+      "Bubblegum-level intellect.",
+      "Reader learns nothing.",
+      "I did their experiments.",
+      "Citation puff piece.",
+      "Five authors signed this?",
+      "Desk-reject material.",
+      "L paper. Skill issue.",
+      "Cooked (negative).",
+      "Should never publish.",
+      "Insults the field.",
+      "Industry-scale required.",
+      "Run on H100 cluster."
+    ]
+  },
+  "ratings": {
+    "best": {
+      "label": "Best Paper",
+      "tagline": "Standing ovation. Please prepare your speech."
+    },
+    "strong_accept": {
+      "label": "Strong Accept",
+      "tagline": "Your advisor buys you dinner."
+    },
+    "weak_accept": {
+      "label": "Weak Accept",
+      "tagline": "Good enough — take it and run."
+    },
+    "borderline": {
+      "label": "Borderline",
+      "tagline": "Depends on the meta-reviewer's mood."
+    },
+    "weak_reject": {
+      "label": "Weak Reject",
+      "tagline": "Revise and try again next cycle."
+    },
+    "strong_reject": {
+      "label": "Strong Reject",
+      "tagline": "Reviewer 2's birthday cake."
+    }
+  },
+  "rarity": {
+    "legendary": "GOAT",
+    "epic": "Top-Tier",
+    "rare": "Sigma",
+    "uncommon": "Based",
+    "common": "NPC",
+    "cursed": "Cooked"
+  },
+  "packs": {
+    "cs-ai": {
+      "name": "CS / AI Core Pack",
+      "description": "Top venues for AI, ML, NLP, CV, systems, and databases."
+    },
+    "bio-med": {
+      "name": "Bio / Medicine DLC",
+      "description": "Nature, Science, Cell, NEJM, Lancet and other cross-disciplinary journals."
+    }
+  },
+  "panels": {
+    "subscribed": "Subscribed Packs",
+    "subscribedSub": "Content Library",
+    "publicationLog": "Publication Log",
+    "publicationLogSub": "Submission Record",
+    "entries": "{{n}} entries",
+    "dlcMore": "More DLC forthcoming: physics · economics · medicine ·",
+    "vol": "VOL. {{n}}",
+    "active": "✓ ACTIVE",
+    "muted": "○ MUTED",
+    "subscribedStamp": "SUBSCRIBED"
+  },
+  "history": {
+    "empty": "—— no record yet · pull the lever ——",
+    "clear": "╳ clear",
+    "rolls": "rolls",
+    "accept": "accept",
+    "bestPaper": "best paper"
+  },
+  "burst": {
+    "certificateOf": "Certificate of Peer Review · Form 7-B",
+    "decision": "decision rendered",
+    "dismiss": "tap outside to dismiss",
+    "certified": "· {{rarity}} · certified ·"
+  },
+  "buttons": {
+    "engage": "► engage",
+    "spinning": "spinning…",
+    "replay": "↺ replay",
+    "capture": "◎ capture"
+  },
+  "fig": {
+    "caption": "FIG. I · VENUE  FIG. II–IV · REVIEWERS I–III"
+  },
+  "footer": {
+    "disclaimer": "Registered with the fictitious arbitration board. Results for entertainment only — real submissions go through OpenReview.",
+    "colophon": "Res. Slot · printed in 1 color on recycled context ·",
+    "colophonSub": "submit responsibly"
+  },
+  "patent": "Patent pending — apparatus comprising four independent specimen windows, one (1) brass initiator, and a tripartite meta-arbitration mechanism for the forecasting of editorial outcomes, per Ordinance § 6-B.",
+  "lang": {
+    "zh": "中",
+    "en": "EN"
+  }
+}

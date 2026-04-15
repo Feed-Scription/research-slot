@@ -1,0 +1,251 @@
+{
+  "brand": "科研老虎机",
+  "brandShort": "Res.Slot",
+  "brandTagline": "同行评审彩票 · Est. MMXXVI",
+  "edition": "四月十五日 · 周二刊",
+  "hero": {
+    "chapter": "第一章 · 投稿之礼",
+    "titleA": "科研",
+    "titleB": "老虎机",
+    "descMobile": "拉一下，让三位匿名审稿人决定你论文的归宿。",
+    "descDesktop": "一台铜球钢杆的同行评审彩票装置。拉一下，让三位匿名审稿人决定你论文的归宿。",
+    "volume": "VOLUME",
+    "handSet": "— 米色纸本手工排版 —"
+  },
+  "masthead": {
+    "metaShort": "VOL. XII · MMXXVI",
+    "metaFull": "季度评论 · VOL. XII · MMXXVI",
+    "title": "Peer Review Apparatus",
+    "sub": "§ 一台加速学术命运的学术装置 §",
+    "certified": "CERTIFIED",
+    "issn": "ISSN 19—74"
+  },
+  "form7b": "Form 7-B · App. № 1974",
+  "lever": {
+    "figCaption": "FIG. IV",
+    "figSub": "initiator",
+    "aria": "拉下手柄 — PRIMARY INITIATOR",
+    "pullToEngage": "↓ 拉下启动",
+    "inOperation": "↻ 运行中"
+  },
+  "reels": {
+    "venue": "VENUE",
+    "venueSerial": "№ 001",
+    "targeting": "· 目标锁定 ·",
+    "reviewer": "REVIEWER · {{n}}",
+    "tierFlavor": {
+      "god": "★ 夯 ★",
+      "top": "— 顶级 —",
+      "mid": "— NPC —",
+      "meme": "（拉完了）"
+    },
+    "tierLabel": {
+      "god": "CLASS S",
+      "top": "CLASS A",
+      "mid": "CLASS B",
+      "meme": "CLASS ?"
+    },
+    "reviewMissing": "REVIEW MISSING",
+    "reviewMissingShort": "OVERDUE",
+    "reviewMissingNote": "审稿人逾期未提交",
+    "allMissingTagline": "三位审稿人都没出现，AC 自己拿主意"
+  },
+  "wish": {
+    "off": "★ 许愿",
+    "on": "★ 许愿中",
+    "stamp": "天命所归",
+    "tooltip": "开启许愿模式：95% 接收 + 仅顶刊顶会"
+  },
+  "commentsByRating": {
+    "best": [
+      "顶会必收",
+      "Best Paper 实锤",
+      "无 weakness",
+      "通讯作者免检",
+      "看作者名就够了",
+      "教科书级",
+      "封神之作",
+      "yyds",
+      "Strong Accept（无评论）",
+      "Bid 来的，必收",
+      "活儿好",
+      "Test of Time 候选",
+      "突破 scaling law"
+    ],
+    "strong_accept": [
+      "你引用了我，接",
+      "师弟的，强收",
+      "数据漂亮，接",
+      "公式严谨，接",
+      "排版漂亮，接",
+      "大组的工作，接",
+      "COI 仍 accept",
+      "👍",
+      "稳过",
+      "Accept，无补充",
+      "可复现，接",
+      "整得不错"
+    ],
+    "weak_accept": [
+      "LGTM",
+      "可以",
+      "全靠同行衬托",
+      "勉强能看",
+      "差不多得了",
+      "我没意见",
+      "Marginal accept",
+      "凑合接",
+      "得，发了"
+    ],
+    "borderline": [
+      "我有四十个问题",
+      "Section 3 看不懂",
+      "看 Meta 心情",
+      "novelty 不确定",
+      "Confidence: 2/5",
+      "标题大于内容",
+      "贡献模糊",
+      "需要 major revision",
+      "实验不够，idea 还行",
+      "Notation 太重",
+      "缺关键 ablation",
+      "判断不了",
+      "蚌埠住了"
+    ],
+    "weak_reject": [
+      "Who is Adam？",
+      "请翻译成英文",
+      "试过 Mamba 没？",
+      "你没引用我",
+      "GPT-5 数据呢？",
+      "DeepSeek 比这便宜",
+      "Llama 4 一行就做了",
+      "BERT-base？2026 了",
+      "ablation 呢？",
+      "理论分析呢？",
+      "novelty 呢？",
+      "baseline 选错",
+      "投错地方了",
+      "writing 需 native",
+      "用 Cursor 重写吧",
+      "需要 Llama 3 70B 结果",
+      "405B 数据呢？",
+      "scale 太小",
+      "需要 GPT-4 baseline"
+    ],
+    "strong_reject": [
+      "焚毁此稿",
+      "封禁作者账号",
+      "ChatGPT 直接能做",
+      "Claude 写得都比你好",
+      "vibecoded paper",
+      "建议作者改行",
+      "Obvious incremental work",
+      "就是 attention + MLP",
+      "2019 年就有了",
+      "封杀这五个作者",
+      "疑似学术不端",
+      "毁了我的周末",
+      "口香糖级智力",
+      "读完毫无收获",
+      "我替他们做了实验",
+      "纯堆引用的水文",
+      "五个作者真签了？",
+      "desk reject 级别",
+      "侮辱整个领域",
+      "agent 早 solve 了",
+      "典",
+      "学术污染",
+      "需要工业级 scale",
+      "上 H100 集群再投"
+    ]
+  },
+  "ratings": {
+    "best": {
+      "label": "Best Paper",
+      "tagline": "全场起立，请发表获奖感言"
+    },
+    "strong_accept": {
+      "label": "Strong Accept",
+      "tagline": "导师请你吃饭"
+    },
+    "weak_accept": {
+      "label": "Weak Accept",
+      "tagline": "能发就行，别挑"
+    },
+    "borderline": {
+      "label": "Borderline",
+      "tagline": "看 meta 心情"
+    },
+    "weak_reject": {
+      "label": "Weak Reject",
+      "tagline": "再改改，下一轮再战"
+    },
+    "strong_reject": {
+      "label": "Strong Reject",
+      "tagline": "Reviewer 2 的生日蛋糕"
+    }
+  },
+  "rarity": {
+    "legendary": "夯",
+    "epic": "顶级",
+    "rare": "人上人",
+    "uncommon": "绝活",
+    "common": "NPC",
+    "cursed": "拉完了"
+  },
+  "packs": {
+    "cs-ai": {
+      "name": "CS / AI 主包",
+      "description": "人工智能、机器学习、NLP、CV、系统、数据库方向的顶会顶刊。"
+    },
+    "bio-med": {
+      "name": "生物 / 医学 DLC",
+      "description": "Nature、Science、Cell、NEJM、Lancet 等跨学科顶刊。"
+    }
+  },
+  "panels": {
+    "subscribed": "订阅内容包",
+    "subscribedSub": "Subscribed Journals",
+    "publicationLog": "投稿登记簿",
+    "publicationLogSub": "Publication Log",
+    "entries": "{{n}} 个期刊/会议",
+    "dlcMore": "更多领域 DLC 开发中：物理、经济、医学…",
+    "vol": "VOL. {{n}}",
+    "active": "✓ ACTIVE",
+    "muted": "○ MUTED",
+    "subscribedStamp": "SUBSCRIBED"
+  },
+  "history": {
+    "empty": "—— 尚无记录 · 请拉动手柄 ——",
+    "clear": "╳ 清空",
+    "rolls": "抽数",
+    "accept": "命中",
+    "bestPaper": "最佳论文"
+  },
+  "burst": {
+    "certificateOf": "同行评审认证书 · Form 7-B",
+    "decision": "最终裁决",
+    "dismiss": "点击空白处退场 · tap outside to dismiss",
+    "certified": "· {{rarity}} · certified ·"
+  },
+  "buttons": {
+    "engage": "► engage",
+    "spinning": "spinning…",
+    "replay": "↺ replay",
+    "capture": "◎ capture"
+  },
+  "fig": {
+    "caption": "FIG. I · VENUE  FIG. II–IV · REVIEWERS I–III"
+  },
+  "footer": {
+    "disclaimer": "本装置经虚拟仲裁委员会备案，结果仅供娱乐；真实投稿请以 OpenReview 为准。",
+    "colophon": "Res. Slot · 以单色油印于循环语境之上 ·",
+    "colophonSub": "理性投稿"
+  },
+  "patent": "Patent pending — 本装置包含四扇独立标本窗口、一枚（1）铜质启动器，以及一套用于预测编辑决策的三方 meta 仲裁机构，依据 § 6-B 法令备案。",
+  "lang": {
+    "zh": "中",
+    "en": "EN"
+  }
+}
