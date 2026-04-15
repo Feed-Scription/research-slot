@@ -160,6 +160,20 @@
       "上 H100 集群再投"
     ]
   },
+  "meta": {
+    "best": {
+      "label": "Best Paper",
+      "tagline": "全场起立，请发表获奖感言"
+    },
+    "accept": {
+      "label": "Accept",
+      "tagline": "导师请你吃饭"
+    },
+    "reject": {
+      "label": "Reject",
+      "tagline": "Reviewer 2 的生日蛋糕"
+    }
+  },
   "ratings": {
     "best": {
       "label": "Best Paper",

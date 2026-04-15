@@ -7,7 +7,7 @@ import { VenueReel } from './VenueReel';
 import { ReviewerReel } from './ReviewerReel';
 import { Lever } from './Lever';
 import { sfx } from '../utils/sound';
-import { getRatingById } from '../data/ratings';
+import { getMetaRatingById } from '../data/ratings';
 
 interface Props {
   onRevealResult: () => void;
@@ -49,7 +49,7 @@ export function SlotMachine({ onRevealResult }: Props) {
     stopCountRef.current += 1;
     if (stopCountRef.current >= 4) {
       // 最后一轮落定：先停留 1 秒让观众看清楚，再结算 + 爆结果
-      const rarity = pending ? getRatingById(pending.finalRatingId).rarity : 'common';
+      const rarity = pending ? getMetaRatingById(pending.finalVerdict).rarity : 'common';
       window.setTimeout(() => {
         reveal();
         if (rarity === 'legendary') sfx.winLegendary();

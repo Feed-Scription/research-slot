@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useGameStore } from '../store/gameStore';
-import { getRatingById } from '../data/ratings';
+import { getMetaRatingById } from '../data/ratings';
 
 export function HistoryPanel() {
   const { t } = useTranslation();
@@ -8,9 +8,9 @@ export function HistoryPanel() {
   const totalSpins = useGameStore((s) => s.totalSpins);
   const clear = useGameStore((s) => s.clearHistory);
 
-  const bestCount = history.filter((h) => h.finalRatingId === 'best').length;
+  const bestCount = history.filter((h) => h.finalVerdict === 'best').length;
   const acceptCount = history.filter((h) =>
-    ['best', 'strong_accept', 'weak_accept'].includes(h.finalRatingId)
+    h.finalVerdict === 'best' || h.finalVerdict === 'accept'
   ).length;
 
   return (
@@ -53,7 +53,7 @@ export function HistoryPanel() {
           </div>
         )}
         {history.map((h, idx) => {
-          const rating = getRatingById(h.finalRatingId);
+          const meta = getMetaRatingById(h.finalVerdict);
           const missingCount = h.reviewers.filter((r) => r.missing).length;
           const firstSubmitted = h.reviewers.find((r) => !r.missing);
           const displayEmoji = firstSubmitted?.emoji ?? '⌛';
@@ -67,7 +67,7 @@ export function HistoryPanel() {
                 <span className="truncate">
                   <span className="text-ink">{h.venue.name}</span>
                   <span className="mx-1 text-ink-muted">/</span>
-                  <span style={{ color: rating.color }}>{t(`ratings.${rating.id}.label`)}</span>
+                  <span style={{ color: meta.color }}>{t(`meta.${meta.id}.label`)}</span>
                   {missingCount > 0 && (
                     <span className="ml-1 text-oxblood text-[9px]">·{missingCount}⌛</span>
                   )}
@@ -76,11 +76,11 @@ export function HistoryPanel() {
               <span
                 className="text-[9px] px-1.5 uppercase tracking-[0.15em]"
                 style={{
-                  color: rating.color,
-                  borderLeft: `2px solid ${rating.color}`,
+                  color: meta.color,
+                  borderLeft: `2px solid ${meta.color}`,
                 }}
               >
-                {t(`rarity.${rating.rarity}`)}
+                {t(`rarity.${meta.rarity}`)}
               </span>
             </div>
           );

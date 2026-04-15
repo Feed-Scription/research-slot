@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import type { SpinResult } from '../store/gameStore';
-import { getRatingById, type Rarity } from '../data/ratings';
+import { getRatingById, getMetaRatingById, type Rarity } from '../data/ratings';
 
 interface ResultBurstProps {
   result: SpinResult | null;
@@ -57,7 +57,7 @@ function InkSplatter({ color, seed }: { color: string; seed: number }) {
 export function ResultBurst({ result, onClose }: ResultBurstProps) {
   const { t } = useTranslation();
   const commentsByRating = (t('commentsByRating', { returnObjects: true }) as Record<string, string[]>) || {};
-  const finalRating = result ? getRatingById(result.finalRatingId) : null;
+  const finalRating = result ? getMetaRatingById(result.finalVerdict) : null;
 
   return (
     <AnimatePresence>
@@ -152,7 +152,7 @@ export function ResultBurst({ result, onClose }: ResultBurstProps) {
                   }}
                 >
                   <div className="stamp-text text-3xl sm:text-4xl md:text-5xl" style={{ letterSpacing: '0.04em' }}>
-                    {t(`ratings.${finalRating.id}.label`)}
+                    {t(`meta.${finalRating.id}.label`)}
                   </div>
                   <div
                     className="font-mono text-[9px] tracking-[0.4em] uppercase mt-1 text-center"
@@ -168,7 +168,7 @@ export function ResultBurst({ result, onClose }: ResultBurstProps) {
               <div className="font-italic-display text-xl italic text-ink">
                 {result.reviewers.every((r) => r.missing)
                   ? t('reels.allMissingTagline')
-                  : t(`ratings.${finalRating.id}.tagline`)}
+                  : t(`meta.${finalRating.id}.tagline`)}
               </div>
               <div className="mt-3 font-mono text-[10px] tracking-[0.3em] text-ink-soft uppercase">
                 {t('burst.dismiss')}

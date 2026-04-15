@@ -160,6 +160,20 @@
       "Run on H100 cluster."
     ]
   },
+  "meta": {
+    "best": {
+      "label": "Best Paper",
+      "tagline": "Standing ovation. Please prepare your speech."
+    },
+    "accept": {
+      "label": "Accept",
+      "tagline": "Your advisor buys you dinner."
+    },
+    "reject": {
+      "label": "Reject",
+      "tagline": "Reviewer 2's birthday cake."
+    }
+  },
   "ratings": {
     "best": {
       "label": "Best Paper",

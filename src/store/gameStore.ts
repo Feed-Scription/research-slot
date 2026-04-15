@@ -6,7 +6,13 @@ import {
   type Venue,
 } from '../data/venues';
 import { COMMENT_COUNTS } from '../data/comments';
-import { RATINGS, type Rating, deriveMetaRating, EMOJIS_BY_RATING } from '../data/ratings';
+import {
+  RATINGS,
+  type Rating,
+  type MetaId,
+  deriveFinalVerdict,
+  EMOJIS_BY_RATING,
+} from '../data/ratings';
 
 export interface Reviewer {
   /** 审稿人逾期未提交。其它字段在 missing 时无意义（保留只为序列化稳定）。 */
@@ -23,7 +29,8 @@ export interface SpinResult {
   timestamp: number;
   venue: Venue;
   reviewers: [Reviewer, Reviewer, Reviewer];
-  finalRatingId: Rating['id'];
+  /** Meta-reviewer 的三档裁决：'best' | 'accept' | 'reject' */
+  finalVerdict: MetaId;
 }
 
 type Phase = 'idle' | 'spinning' | 'revealed';
@@ -114,19 +121,16 @@ export const useGameStore = create<GameState>()(
           Reviewer,
         ];
         const submitted = reviewers.filter((r) => !r.missing);
-        // 全员不交 → AC 一人定夺，按 borderline 默认；否则按交了的人均分
-        const finalRatingId =
-          submitted.length === 0
-            ? 'borderline'
-            : deriveMetaRating(
-                submitted.map((r) => RATINGS.find((x) => x.id === r.ratingId)?.score ?? 5)
-              ).id;
+        // 全员不交 → AC 单独决定，默认 reject；否则按交了的人均分映射到 3 档
+        const finalVerdict = deriveFinalVerdict(
+          submitted.map((r) => RATINGS.find((x) => x.id === r.ratingId)?.score ?? 5)
+        ).id;
         const result: SpinResult = {
           id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
           timestamp: Date.now(),
           venue: pick(venuePool),
           reviewers,
-          finalRatingId,
+          finalVerdict,
         };
         set({ phase: 'spinning', pending: result, result: null });
         return result;
@@ -158,7 +162,7 @@ export const useGameStore = create<GameState>()(
       toggleWishMode: () => set({ wishMode: !get().wishMode }),
     }),
     {
-      name: 'research-slot-v5',
+      name: 'research-slot-v6',
       partialize: (s) => ({
         history: s.history,
         totalSpins: s.totalSpins,

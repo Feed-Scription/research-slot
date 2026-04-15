@@ -39,16 +39,35 @@ export const EMOJIS_BY_RATING: Record<Rating['id'], string[]> = {
 
 export const ALL_EMOJIS: string[] = Object.values(EMOJIS_BY_RATING).flat();
 
-export function deriveMetaRating(scores: number[]): Rating {
+/* ---------- 最终裁决（meta-reviewer 收成 3 档）---------- */
+
+export type MetaId = 'best' | 'accept' | 'reject';
+
+export interface MetaRating {
+  id: MetaId;
+  rarity: Rarity;
+  color: string;
+}
+
+export const META_RATINGS: Record<MetaId, MetaRating> = {
+  best:   { id: 'best',   rarity: 'legendary', color: '#d9a441' }, // 金
+  accept: { id: 'accept', rarity: 'rare',      color: '#2e4a3e' }, // 森林
+  reject: { id: 'reject', rarity: 'cursed',    color: '#b7312b' }, // 血红
+};
+
+export function getMetaRatingById(id: MetaId): MetaRating {
+  return META_RATINGS[id] ?? META_RATINGS.reject;
+}
+
+/**
+ * 三档裁决：avg ≥ 9 → Best Paper；6 ≤ avg < 9 → Accept；avg < 6 → Reject。
+ * 单条 Best Paper（10）自动收为 Best；3 个 Strong Accept (8) 平均 8 → Accept；
+ * 任意 borderline-下 → Reject（meta 不再有"边缘"出口）。
+ */
+export function deriveFinalVerdict(scores: number[]): MetaRating {
+  if (scores.length === 0) return META_RATINGS.reject;
   const avg = scores.reduce((s, x) => s + x, 0) / scores.length;
-  let best = RATINGS[0];
-  let bestDiff = Math.abs(best.score - avg);
-  for (const r of RATINGS) {
-    const d = Math.abs(r.score - avg);
-    if (d < bestDiff) {
-      best = r;
-      bestDiff = d;
-    }
-  }
-  return best;
+  if (avg >= 9) return META_RATINGS.best;
+  if (avg >= 6) return META_RATINGS.accept;
+  return META_RATINGS.reject;
 }
