@@ -153,6 +153,17 @@ export default function App() {
           {t('footer.colophon')}
           <span className="sep-star">{t('footer.colophonSub')}</span>
         </div>
+        <div className="mt-2 font-mono text-[10px] tracking-[0.18em] text-ink-muted">
+          {t('footer.morePrefix')}{' '}
+          <a
+            href="https://platform.feedscription.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-ink-soft underline-offset-2 hover:text-oxblood hover:decoration-oxblood transition-colors"
+          >
+            {t('footer.moreLabel')}
+          </a>
+        </div>
       </footer>
 
       <ResultBurst

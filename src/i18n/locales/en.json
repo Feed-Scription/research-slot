@@ -241,7 +241,9 @@
   "footer": {
     "disclaimer": "Registered with the fictitious arbitration board. Results for entertainment only — real submissions go through OpenReview.",
     "colophon": "Res. Slot · printed in 1 color on recycled context ·",
-    "colophonSub": "submit responsibly"
+    "colophonSub": "submit responsibly",
+    "morePrefix": "more curious things →",
+    "moreLabel": "Feed Scription"
   },
   "patent": "Patent pending — apparatus comprising four independent specimen windows, one (1) brass initiator, and a tripartite meta-arbitration mechanism for the forecasting of editorial outcomes, per Ordinance § 6-B.",
   "lang": {

@@ -241,7 +241,9 @@
   "footer": {
     "disclaimer": "本装置经虚拟仲裁委员会备案，结果仅供娱乐；真实投稿请以 OpenReview 为准。",
     "colophon": "Res. Slot · 以单色油印于循环语境之上 ·",
-    "colophonSub": "理性投稿"
+    "colophonSub": "理性投稿",
+    "morePrefix": "更多有趣的内容 →",
+    "moreLabel": "Feed Scription"
   },
   "patent": "Patent pending — 本装置包含四扇独立标本窗口、一枚（1）铜质启动器，以及一套用于预测编辑决策的三方 meta 仲裁机构，依据 § 6-B 法令备案。",
   "lang": {
