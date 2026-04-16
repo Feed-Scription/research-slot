@@ -222,7 +222,7 @@
     "publicationLog": "投稿登记簿",
     "publicationLogSub": "Publication Log",
     "entries": "{{n}} 个期刊/会议",
-    "dlcMore": "更多领域 DLC 开发中：物理、经济、医学…",
+    "dlcMore": "欢迎 fork 共创更多领域 → GitHub",
     "vol": "VOL. {{n}}",
     "active": "✓ ACTIVE",
     "muted": "○ MUTED",

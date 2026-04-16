@@ -63,8 +63,15 @@ export function PackSelector() {
           );
         })}
       </div>
-      <div className="mt-4 font-italic-display italic text-[12px] text-ink-muted leading-snug">
-        {t('panels.dlcMore')}
+      <div className="mt-4 font-mono text-[10px] tracking-[0.18em] text-ink-muted">
+        <a
+          href="https://github.com/Feed-Scription/research-slot"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline decoration-ink-soft underline-offset-2 hover:text-oxblood hover:decoration-oxblood transition-colors"
+        >
+          {t('panels.dlcMore')}
+        </a>
       </div>
     </aside>
   );
