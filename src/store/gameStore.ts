@@ -67,7 +67,7 @@ function weightedPick<T extends { weight: number }>(arr: readonly T[]): T {
   return arr[arr.length - 1];
 }
 
-const MISSING_RATE = 0.12;
+const MISSING_RATE = 0.05;
 
 const WISH_WEIGHTS: Record<Rating['id'], number> = {
   best: 30,
