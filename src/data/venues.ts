@@ -16,6 +16,11 @@ export interface PackJSON {
   name: Record<Locale, string>;
   description: Record<Locale, string>;
   venues: Venue[];
+  /**
+   * 学科专属审稿梗（可选）。有的 tier 可以省略——省略的 fallback 到全局 i18n。
+   * 两种语言下同一 tier 的数组长度应该一致。
+   */
+  commentsByRating?: Record<Locale, Partial<Record<string, string[]>>>;
 }
 
 export interface VenuePack extends PackJSON {

@@ -27,35 +27,34 @@ function pick<T>(arr: readonly T[]): T {
 
 export function ReviewerReel({ index, finalReviewer, spinning, spinDurationMs, onStop }: Props) {
   const { t } = useTranslation();
-  const commentsByRating =
-    (t('commentsByRating', { returnObjects: true }) as Record<string, string[]>) || {};
+  // 全局 comments 用于 filler cycling（视觉噪声，不需要 pack-specific）
+  const globalComments = (t('commentsByRating', { returnObjects: true }) as Record<string, string[]>) || {};
+  const allComments: string[] = Object.values(globalComments).flat();
 
   const y = useMotionValue(0);
   const stoppedRef = useRef(false);
 
-  // 每次 spin 重新生成 filler（key 基于 finalReviewer 身份）
   const fillers: StripItem[] = useMemo(() => {
     return Array.from({ length: FILLER }, () => {
       const r = pick(RATINGS);
-      const pool = commentsByRating[r.id] ?? [];
+      const pool = globalComments[r.id] ?? allComments;
       return {
         kind: 'normal' as const,
         emoji: pick(EMOJIS_BY_RATING[r.id]),
-        comment: pool[Math.floor(Math.random() * Math.max(1, pool.length))] ?? '',
+        comment: pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : '…',
         rating: r,
       };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [finalReviewer?.emoji, finalReviewer?.commentIndex, finalReviewer?.ratingId, finalReviewer?.missing]);
+  }, [finalReviewer?.emoji, finalReviewer?.comment, finalReviewer?.ratingId, finalReviewer?.missing]);
 
   const finalItem: StripItem = useMemo(() => {
     if (!finalReviewer) return fillers[0];
     if (finalReviewer.missing) return { kind: 'missing' };
-    const pool = commentsByRating[finalReviewer.ratingId] ?? [];
     return {
       kind: 'normal',
       emoji: finalReviewer.emoji,
-      comment: pool[finalReviewer.commentIndex] ?? '',
+      comment: finalReviewer.comment,
       rating: getRatingById(finalReviewer.ratingId),
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,16 +85,8 @@ export function ReviewerReel({ index, finalReviewer, spinning, spinDurationMs, o
       <div className="specimen-inner relative overflow-hidden">
         <motion.div className="absolute inset-x-0 top-0" style={{ y }}>
           {strip.map((item, i) => (
-            <div
-              key={i}
-              style={{ height: ITEM_H }}
-              className="relative"
-            >
-              {item.kind === 'missing' ? (
-                <MissingCard />
-              ) : (
-                <NormalCard item={item} rotate={index % 2 === 0 ? -3 : 4} />
-              )}
+            <div key={i} style={{ height: ITEM_H }} className="relative">
+              {item.kind === 'missing' ? <MissingCard /> : <NormalCard item={item} rotate={index % 2 === 0 ? -3 : 4} />}
             </div>
           ))}
         </motion.div>
@@ -104,13 +95,7 @@ export function ReviewerReel({ index, finalReviewer, spinning, spinDurationMs, o
   );
 }
 
-function NormalCard({
-  item,
-  rotate,
-}: {
-  item: { emoji: string; comment: string; rating: Rating };
-  rotate: number;
-}) {
+function NormalCard({ item, rotate }: { item: { emoji: string; comment: string; rating: Rating }; rotate: number }) {
   const { t } = useTranslation();
   return (
     <>

@@ -3,9 +3,10 @@ import { persist } from 'zustand/middleware';
 import {
   getActiveVenues,
   getDefaultEnabledPackIds,
+  ALL_PACKS,
   type Venue,
+  type Locale,
 } from '../data/venues';
-import { COMMENT_COUNTS } from '../data/comments';
 import {
   RATINGS,
   type Rating,
@@ -14,15 +15,15 @@ import {
   deriveFinalVerdict,
   EMOJIS_BY_RATING,
 } from '../data/ratings';
+import i18n from '../i18n';
 
 export interface Reviewer {
-  /** 审稿人逾期未提交。其它字段在 missing 时无意义（保留只为序列化稳定）。 */
+  /** 审稿人逾期未提交。其它字段在 missing 时无意义。 */
   missing: boolean;
   emoji: string;
-  /** 评级 id（决定 emoji 和评语的池子） */
   ratingId: Rating['id'];
-  /** 索引进该评级池（i18n `commentsByRating.{ratingId}[commentIndex]`） */
-  commentIndex: number;
+  /** spin 时解析好的评语文本（来自 pack 专属池或全局 i18n 池）。 */
+  comment: string;
 }
 
 export interface SpinResult {
@@ -30,9 +31,7 @@ export interface SpinResult {
   timestamp: number;
   venue: Venue;
   reviewers: [Reviewer, Reviewer, Reviewer];
-  /** Meta-reviewer 的三档裁决：'best' | 'accept' | 'reject' */
   finalVerdict: MetaId;
-  /** meta 个人偏差：normal / 傻逼 / 亲爹 */
   metaFlavor: MetaFlavor;
 }
 
@@ -45,7 +44,6 @@ interface GameState {
   history: SpinResult[];
   totalSpins: number;
   enabledPackIds: string[];
-  /** 许愿模式：天命所归，95% accept + 仅顶刊顶会 + 审稿人不缺席。 */
   wishMode: boolean;
 
   spin: () => SpinResult;
@@ -69,13 +67,8 @@ function weightedPick<T extends { weight: number }>(arr: readonly T[]): T {
   return arr[arr.length - 1];
 }
 
-/** 审稿人未提交评审的概率。学术圈常态。 */
 const MISSING_RATE = 0.12;
 
-/**
- * 许愿模式权重：累计 95% accept（best/strong/weak），其余 5% 是 borderline + 拒。
- * 故意保留极小概率诅咒，提供反差喜剧效果。
- */
 const WISH_WEIGHTS: Record<Rating['id'], number> = {
   best: 30,
   strong_accept: 40,
@@ -85,19 +78,40 @@ const WISH_WEIGHTS: Record<Rating['id'], number> = {
   strong_reject: 0.5,
 };
 
-function rollReviewer(wishMode: boolean): Reviewer {
-  // 许愿模式下审稿人天命般地按时提交
+/* ---------- 评语池解析 ---------- */
+
+function getLang(): Locale {
+  return (i18n.language?.startsWith('zh') ? 'zh-CN' : 'en') as Locale;
+}
+
+/**
+ * 给定 venue 所在 pack + 当前语言 + 评级，返回应该使用的评语字符串池。
+ * pack 有自定义 → 用 pack 的；否则 fallback 全局 i18n。
+ */
+function getCommentPool(venue: Venue, ratingId: Rating['id']): string[] {
+  const lang = getLang();
+  // 找到 venue 所属的 pack
+  const pack = ALL_PACKS.find((p) => p.venues.some((v) => v.name === venue.name));
+  const packPool = pack?.commentsByRating?.[lang]?.[ratingId];
+  if (packPool && packPool.length > 0) return packPool;
+  // fallback: 全局 i18n
+  const global = i18n.t(`commentsByRating.${ratingId}`, { returnObjects: true });
+  return Array.isArray(global) && global.length > 0 ? (global as string[]) : ['...'];
+}
+
+function rollReviewer(wishMode: boolean, venue: Venue): Reviewer {
   const missingRate = wishMode ? 0.02 : MISSING_RATE;
   if (Math.random() < missingRate) {
-    return { missing: true, emoji: '', ratingId: 'borderline', commentIndex: 0 };
+    return { missing: true, emoji: '', ratingId: 'borderline', comment: '' };
   }
   const ratingsPool = wishMode
     ? RATINGS.map((r) => ({ ...r, weight: WISH_WEIGHTS[r.id] }))
     : RATINGS;
   const rating = weightedPick(ratingsPool);
   const emoji = pick(EMOJIS_BY_RATING[rating.id]);
-  const commentIndex = Math.floor(Math.random() * COMMENT_COUNTS[rating.id]);
-  return { missing: false, emoji, ratingId: rating.id, commentIndex };
+  const pool = getCommentPool(venue, rating.id);
+  const comment = pick(pool);
+  return { missing: false, emoji, ratingId: rating.id, comment };
 }
 
 export const useGameStore = create<GameState>()(
@@ -115,17 +129,15 @@ export const useGameStore = create<GameState>()(
         const wish = get().wishMode;
         const venues = getActiveVenues(get().enabledPackIds);
         const fallback = venues.length > 0 ? venues : getActiveVenues(getDefaultEnabledPackIds());
-        // 许愿模式：只挑顶刊顶会（god + top）；若过滤后为空再降级到完整池
         const wished = wish ? fallback.filter((v) => v.tier === 'god' || v.tier === 'top') : fallback;
         const venuePool = wished.length > 0 ? wished : fallback;
-        const reviewers = [rollReviewer(wish), rollReviewer(wish), rollReviewer(wish)] as [
-          Reviewer,
-          Reviewer,
-          Reviewer,
-        ];
+        const venue = pick(venuePool);
+        const reviewers = [
+          rollReviewer(wish, venue),
+          rollReviewer(wish, venue),
+          rollReviewer(wish, venue),
+        ] as [Reviewer, Reviewer, Reviewer];
         const submitted = reviewers.filter((r) => !r.missing);
-        // 按交了的人均分先算自然结论，再让 meta 抽偏差。
-        // 许愿模式下屏蔽 asshole 分支——既然是许愿，就别让 AC 反手给一刀。
         const meta = deriveFinalVerdict(
           submitted.map((r) => RATINGS.find((x) => x.id === r.ratingId)?.score ?? 5),
           { suppressAsshole: wish }
@@ -133,7 +145,7 @@ export const useGameStore = create<GameState>()(
         const result: SpinResult = {
           id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
           timestamp: Date.now(),
-          venue: pick(venuePool),
+          venue,
           reviewers,
           finalVerdict: meta.verdict,
           metaFlavor: meta.flavor,
@@ -168,7 +180,7 @@ export const useGameStore = create<GameState>()(
       toggleWishMode: () => set({ wishMode: !get().wishMode }),
     }),
     {
-      name: 'research-slot-v7',
+      name: 'research-slot-v8',
       partialize: (s) => ({
         history: s.history,
         totalSpins: s.totalSpins,

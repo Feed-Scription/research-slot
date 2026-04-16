@@ -56,7 +56,6 @@ function InkSplatter({ color, seed }: { color: string; seed: number }) {
 
 export function ResultBurst({ result, onClose }: ResultBurstProps) {
   const { t } = useTranslation();
-  const commentsByRating = (t('commentsByRating', { returnObjects: true }) as Record<string, string[]>) || {};
   const finalRating = result ? getMetaRatingById(result.finalVerdict) : null;
 
   return (
@@ -113,8 +112,6 @@ export function ResultBurst({ result, onClose }: ResultBurstProps) {
                   );
                 }
                 const rating = getRatingById(r.ratingId);
-                const pool = commentsByRating[r.ratingId] ?? [];
-                const commentText = pool[r.commentIndex] ?? '';
                 return (
                   <div key={i} className="border border-ink/70 bg-paper-warm/60 p-1.5 sm:p-2 text-center">
                     <div className="font-mono text-[9px] tracking-[0.22em] text-ink-soft uppercase">
@@ -122,7 +119,7 @@ export function ResultBurst({ result, onClose }: ResultBurstProps) {
                     </div>
                     <div className="text-2xl sm:text-3xl my-1 leading-none">{r.emoji}</div>
                     <div className="font-italic-display italic text-[10px] sm:text-[11px] leading-tight text-ink/85 min-h-[28px]">
-                      「{commentText}」
+                      「{r.comment}」
                     </div>
                     <div
                       className="font-mono text-[8px] mt-1 tracking-widest uppercase py-0.5 border"

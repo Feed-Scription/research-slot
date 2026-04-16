@@ -1,5 +1,5 @@
 {
-  "_comment": "复制这个文件 → 重命名成你学科的 slug（例如 physics.json, econ.json, neuroscience.json）→ 改下面的字段 → 提 PR 就行。`_` 前缀的文件会被构建忽略，所以模板本身不会被加载。",
+  "_comment": "复制这个文件 → 重命名成你学科的 slug → 改下面的字段 → 提 PR。`_` 前缀文件不会被构建加载。",
   "id": "your-field-slug",
   "defaultEnabled": false,
   "hidden": false,
@@ -8,13 +8,32 @@
     "en": "Field name in English"
   },
   "description": {
-    "zh-CN": "一两句话的学科方向 / 涵盖范围描述。",
+    "zh-CN": "一两句话描述涵盖范围。",
     "en": "A short sentence describing the field."
   },
   "venues": [
     { "name": "期刊/会议名（保持原文）", "tier": "god" },
     { "name": "Another Venue", "tier": "top" },
     { "name": "Some Venue", "tier": "mid" },
-    { "name": "Meme / 玩梗的 venue", "tier": "meme" }
-  ]
+    { "name": "Meme Venue", "tier": "meme" }
+  ],
+  "_comment2": "commentsByRating 是可选的。省略则 fallback 到全局 CS/AI 梗。只有你学科有自己的审稿梗时才填。每个 tier 也可以只填部分——缺的 tier 同样 fallback。",
+  "commentsByRating": {
+    "zh-CN": {
+      "best": ["你的学科 best 梗"],
+      "strong_accept": ["你的学科 strong_accept 梗"],
+      "weak_accept": ["你的学科 weak_accept 梗"],
+      "borderline": ["你的学科 borderline 梗"],
+      "weak_reject": ["你的学科 weak_reject 梗"],
+      "strong_reject": ["你的学科 strong_reject 梗"]
+    },
+    "en": {
+      "best": ["Your field's best meme"],
+      "strong_accept": ["Your field's strong_accept meme"],
+      "weak_accept": ["Your field's weak_accept meme"],
+      "borderline": ["Your field's borderline meme"],
+      "weak_reject": ["Your field's weak_reject meme"],
+      "strong_reject": ["Your field's strong_reject meme"]
+    }
+  }
 }
